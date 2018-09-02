@@ -56,7 +56,7 @@ class AppComponent extends React.Component<IProps> {
     }
 }
 
-export const App = connect<IUser, IDispatchFromProps, {}, IRootState>(
+export const App = connect<IStateFromProps, IDispatchFromProps, {}, IRootState>(
     mapStateToProps,
     mapDispatchToProps,
 )(AppComponent);
