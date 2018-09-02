@@ -9,6 +9,7 @@ module.exports = {
         "ecmaVersion": 2017,
         "sourceType": "module"
     },
+    "parser": "typescript-eslint-parser",
     "rules": {
         "indent": [
             "error",
