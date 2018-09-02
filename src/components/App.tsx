@@ -1,57 +1,65 @@
-import * as React from 'react';
-import { ActionType } from 'typesafe-actions';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import * as auth from "actions/auth";
+import { Login } from "components/Login";
+import { isLoggedIn } from "helpers/auth";
+import { IUser } from "models/user";
+import * as React from "react";
+import { connect } from "react-redux";
+import { IRootState } from "reducers/root-reducer";
+import { Dispatch } from "redux";
+import { ActionType } from "typesafe-actions";
 
-import { RootState } from '../reducers/root-reducer';
-import { User } from '../models/user';
-import * as auth from '../actions/auth'
-
-interface StateFromProps extends User {}
-
-interface DispatchFromProps {
+interface IDispatchFromProps {
     login: (username: string, password: string) => void;
     logout: () => void;
 }
 
-interface Props extends StateFromProps, DispatchFromProps {}
+interface IProps extends IUser, IDispatchFromProps {}
 
-const mapStateToProps = (state: RootState): StateFromProps => ({
-  username: state.auth.username
-})
+const mapStateToProps = (state: IRootState): IUser => ({
+  username: state.auth.username,
+});
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<ActionType<typeof auth>>
-): DispatchFromProps => ({
+  dispatch: Dispatch<ActionType<typeof auth>>,
+): IDispatchFromProps => ({
   login: (username: string, password: string) => dispatch(auth.login(username, password)),
-  logout: () => dispatch(auth.logout())
-})
+  logout: () => dispatch(auth.logout()),
+});
 
-class AppComponent extends React.Component<Props> {
-    constructor(props: Props) {
+class AppComponent extends React.Component<IProps> {
+    constructor(props: IProps) {
         super(props);
 
-        this.login = this.login.bind(this)
-        this.logout = this.logout.bind(this)
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
-    login() {
+    public render() {
+        if (isLoggedIn()) {
+            return (
+                <div>
+                    <h1>{this.props.username}</h1>
+                    <button onClick={this.login}>Login</button>
+                    <button onClick={this.logout}>Logout</button>
+                </div>
+            );
+        }
+
+        return (
+            <Login />
+        );
+    }
+
+    private login() {
         this.props.login("Username", "Password");
     }
 
-    logout() {
+    private logout() {
         this.props.logout();
-    }
-
-    render() {
-        return (
-            <div>
-                <h1>{this.props.username}</h1>
-                <button onClick={this.login}>Login</button>
-                <button onClick={this.logout}>Logout</button>
-            </div>
-        );
     }
 }
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export const App = connect<IUser, IDispatchFromProps, {}, IRootState>(
+    mapStateToProps,
+    mapDispatchToProps,
+)(AppComponent);

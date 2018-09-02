@@ -1,11 +1,10 @@
-import { createStore, Store } from 'redux';
+import rootReducer, { IRootState } from "reducers/root-reducer";
+import { createStore, Store } from "redux";
 
-import rootReducer, { RootState } from './reducers/root-reducer'
-
-function configureStore(initialState: RootState) {
+function configureStore(initialState: IRootState) {
     return createStore(rootReducer, initialState);
 }
 
-const store: Store<RootState> = configureStore({ auth: {} });
+const store: Store<IRootState> = configureStore({ auth: {} });
 
 export default store;

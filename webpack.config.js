@@ -1,3 +1,9 @@
+const path = require('path');
+
+function srcPath(subdir) {
+    return path.join(__dirname, 'src', subdir); // eslint-disable-line
+}
+
 module.exports = {
     mode: 'development',
     entry: './src/index.tsx',
@@ -10,6 +16,13 @@ module.exports = {
 
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
+        alias: {
+            actions: srcPath('actions'),
+            components: srcPath('components'),
+            helpers: srcPath('helpers'),
+            models: srcPath('models'),
+            reducers: srcPath('reducers'),
+        }
     },
 
     module: {

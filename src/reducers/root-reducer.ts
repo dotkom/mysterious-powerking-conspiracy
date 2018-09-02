@@ -1,16 +1,16 @@
-import { combineReducers, Action } from 'redux';
-import { ActionType } from 'typesafe-actions';
+import { combineReducers } from "redux";
+import { ActionType } from "typesafe-actions";
 
-import { User } from '../models/user';
-import * as auth from '../actions/auth';
-import authReducer from './auth';
+import * as auth from "actions/auth";
+import { IUser } from "models/user";
+import authReducer from "reducers/auth";
 
-export type RootState = {
-    readonly auth: User;
+export interface IRootState {
+    readonly auth: IUser;
 }
 
 export type RootActions = ActionType<typeof auth>;
 
-export default combineReducers<RootState, RootActions>({
+export default combineReducers<IRootState, RootActions>({
     auth: authReducer,
 });
