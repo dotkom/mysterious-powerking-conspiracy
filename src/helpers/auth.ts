@@ -6,7 +6,7 @@ export const login = (username: string, password: string): IUser => {
         id: 0,
         name: "Test User",
         token: "okidoki",
-        username: "testuser",
+        username,
     } as IUser;
 };
 

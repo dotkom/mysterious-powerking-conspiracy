@@ -8,15 +8,17 @@ import { IRootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
 import { ActionType } from "typesafe-actions";
 
+interface IStateFromProps {
+    user: IUser;
+}
+
 interface IDispatchFromProps {
     logout: () => void;
 }
 
-interface IProps extends IUser, IDispatchFromProps {}
+interface IProps extends IStateFromProps, IDispatchFromProps {}
 
-const mapStateToProps = (state: IRootState): IUser => ({
-  username: state.auth.username,
-});
+const mapStateToProps = (state: IRootState): IStateFromProps => ({ user: state.auth });
 
 const mapDispatchToProps = (
   dispatch: Dispatch<ActionType<typeof auth>>,
@@ -35,7 +37,10 @@ class AppComponent extends React.Component<IProps> {
         if (isLoggedIn()) {
             return (
                 <div>
-                    <h1>{this.props.username}</h1>
+                    <p>ID: {this.props.user.id}</p>
+                    <p>Name: {this.props.user.name}</p>
+                    <p>Username: {this.props.user.username}</p>
+                    <p>Token: {this.props.user.token}</p>
                     <button onClick={this.logout}>Logout</button>
                 </div>
             );
