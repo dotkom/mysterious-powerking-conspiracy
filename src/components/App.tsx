@@ -9,7 +9,6 @@ import { Dispatch } from "redux";
 import { ActionType } from "typesafe-actions";
 
 interface IDispatchFromProps {
-    login: (username: string, password: string) => void;
     logout: () => void;
 }
 
@@ -22,7 +21,6 @@ const mapStateToProps = (state: IRootState): IUser => ({
 const mapDispatchToProps = (
   dispatch: Dispatch<ActionType<typeof auth>>,
 ): IDispatchFromProps => ({
-  login: (username: string, password: string) => dispatch(auth.login(username, password)),
   logout: () => dispatch(auth.logout()),
 });
 
@@ -30,7 +28,6 @@ class AppComponent extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
 
-        this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
     }
 
@@ -39,19 +36,14 @@ class AppComponent extends React.Component<IProps> {
             return (
                 <div>
                     <h1>{this.props.username}</h1>
-                    <button onClick={this.login}>Login</button>
                     <button onClick={this.logout}>Logout</button>
                 </div>
             );
-        }
-
-        return (
+        } else {
+          return (
             <Login />
-        );
-    }
-
-    private login() {
-        this.props.login("Username", "Password");
+          );
+        }
     }
 
     private logout() {
