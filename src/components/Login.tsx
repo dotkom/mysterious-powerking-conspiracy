@@ -1,6 +1,7 @@
 import * as auth from "actions/auth";
 import * as React from "react";
 import { connect } from "react-redux";
+import { IRootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
 import { ActionType } from "typesafe-actions";
 
@@ -44,4 +45,4 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
     }
 }
 
-export const Login = connect(null, mapDispatchToProps)(LoginComponent);
+export const Login = connect<{}, IDispatchFromProps, {}, IRootState>(null, mapDispatchToProps)(LoginComponent);

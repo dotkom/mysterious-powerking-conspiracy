@@ -1,5 +1,6 @@
 import * as auth from "actions/auth";
 import { Login } from "components/Login";
+import { Store } from "components/Store";
 import { isLoggedIn } from "helpers/auth";
 import { IUser } from "models/user";
 import * as React from "react";
@@ -36,18 +37,12 @@ class AppComponent extends React.Component<IProps> {
     public render() {
         if (isLoggedIn()) {
             return (
-                <div>
-                    <p>ID: {this.props.user.id}</p>
-                    <p>Name: {this.props.user.name}</p>
-                    <p>Username: {this.props.user.username}</p>
-                    <p>Token: {this.props.user.token}</p>
-                    <button onClick={this.logout}>Logout</button>
-                </div>
+                <Store />
             );
         } else {
-          return (
-            <Login />
-          );
+            return (
+                <Login />
+            );
         }
     }
 

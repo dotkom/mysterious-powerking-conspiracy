@@ -1,9 +1,6 @@
-type ID = number;
-type Token = string;
-
 export interface IUser {
-    id?: ID;
+    id?: number;
     username?: string;
     name?: string;
-    token?: Token;
+    token?: string;
 }
