@@ -1,4 +1,4 @@
-import { IItem } from "models/item";
+import { IBasketItem, IItem } from "models/item";
 
 export const testItems: IItem[] = [
     {
@@ -13,4 +13,16 @@ export const testItems: IItem[] = [
         name: "Lollipop",
         price: 3,
     },
+    {
+        description: "Billig, dog robust bil. Lite brukt i vesten.",
+        id: 3,
+        name: "Lada",
+        price: 150,
+    },
 ];
+
+export function basketPrice(basket: IBasketItem[]): number {
+    return basket.reduce<number>((total: number, currentBasketItem: IBasketItem) => (
+        total + currentBasketItem.price
+    ), 0);
+}

@@ -23,6 +23,8 @@ export default (state: IStore = { items: [], basket: [] }, action: StoreActions)
                     ...state.basket.slice(indexOfItemToRemove + 1),
                 ],
             };
+        case getType(storeActions.completePurchase):
+            return { ...state, basket: [] };
         default:
             return state;
     }

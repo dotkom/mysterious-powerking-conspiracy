@@ -7,3 +7,5 @@ export const addToBasket = createAction("store/ADD_TO_BASKET", (resolve) => (
 export const removeFromBasket = createAction("store/REMOVE_FROM_BASKET", (resolve) => (
     (uuid: string) => resolve({ uuid })
 ));
+
+export const completePurchase = createAction("store/COMPLETE_PURCHASE");
