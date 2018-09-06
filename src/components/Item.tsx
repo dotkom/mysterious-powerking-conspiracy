@@ -3,7 +3,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { IRootState } from "reducers/root-reducer";
 
-
 class ItemComponent extends React.Component<IItem> {
     public render() {
         return (

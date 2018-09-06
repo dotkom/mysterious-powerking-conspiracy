@@ -1,4 +1,5 @@
-import * as auth from "actions/auth";
+import * as authActions from "actions/auth";
+import * as storeActions from "actions/store";
 import { IStore } from "models/store";
 import { IUser } from "models/user";
 import authReducer from "reducers/auth";
@@ -11,7 +12,7 @@ export interface IRootState {
     readonly store: IStore;
 }
 
-export type RootActions = ActionType<typeof auth>;
+export type RootActions = ActionType<typeof authActions> & ActionType<typeof storeActions>;
 
 export default combineReducers<IRootState, RootActions>({
     auth: authReducer,

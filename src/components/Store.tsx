@@ -1,4 +1,5 @@
-import { Item } from "components/Item";
+import { Basket } from "components/Basket";
+import { StoreItem } from "components/StoreItem";
 import { IItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -11,12 +12,17 @@ interface IStateFromProps {
 class StoreContainer extends React.Component<IStateFromProps> {
     public render() {
         const items = this.props.items.map((item: IItem) => (
-            <Item key={item.id} {...item} />
+            <StoreItem key={item.id} {...item} />
         ));
 
         return (
             <div>
-                {items}
+                <div className="items">
+                    {items}
+                </div>
+                <div className="basket">
+                    <Basket />
+                </div>
             </div>
         );
     }

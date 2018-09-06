@@ -4,3 +4,7 @@ export interface IItem {
     description: string;
     price: number;
 }
+
+export interface IBasketItem extends IItem {
+    uuid: string;
+}
