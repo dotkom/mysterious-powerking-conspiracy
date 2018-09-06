@@ -22,5 +22,5 @@ class BasketContainer extends React.Component<IStateFromProps> {
 }
 
 export const Basket = connect<IStateFromProps, {}, {}, IRootState>(
-    (state: IRootState): IStateFromProps => ({ basket: state.store.basket })
+    (state: IRootState): IStateFromProps => ({ basket: state.store.basket }),
 )(BasketContainer);

@@ -3,4 +3,5 @@ export interface IUser {
     username?: string;
     name?: string;
     token?: string;
+    balance?: number;
 }
