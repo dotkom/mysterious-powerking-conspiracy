@@ -44,6 +44,7 @@ class BasketContainer extends React.Component<IProps> {
                     <BasketItem key={index} {...item} />
                 ))}
                 <button onClick={this.completePurchase} disabled={this.purchaseDisabled()}>Betal</button>
+                <p>Saldo etter kjøp: {this.props.balance! - basketPrice(this.props.basket)}NOK.</p>
             </div>
         );
     }
