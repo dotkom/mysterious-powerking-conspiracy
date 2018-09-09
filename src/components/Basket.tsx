@@ -16,12 +16,14 @@ interface IStateFromProps {
 interface IDispatchFromProps {
     completePurchase: () => void;
     subtractFromBalance: (delta: number) => void;
+    purchase: () => void;
 }
 
 const mapDispatchToProps = (
     dispatch: Dispatch<userA.UserAction | storeA.StoreAction>,
 ): IDispatchFromProps => ({
     completePurchase: () => dispatch(storeA.completePurchase()),
+    purchase: () => dispatch(storeA.purchase.request()),
     subtractFromBalance: (delta: number) => dispatch(userA.subtractFromBalance(delta)),
 });
 
@@ -44,6 +46,7 @@ class BasketContainer extends React.Component<IProps> {
                 ))}
                 <button onClick={this.completePurchase} disabled={this.purchaseDisabled()}>Betal</button>
                 <p>Saldo etter kjøp: {this.props.balance! - basketPrice(this.props.basket)}NOK.</p>
+                <button onClick={this.props.purchase}>TEST NEW FEATURE!1!!</button>
             </div>
         );
     }

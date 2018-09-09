@@ -1,9 +1,21 @@
+import { purchaseEpic } from "epics/store";
 import { testItems } from "helpers/store";
-import rootReducer, { RootState } from "reducers/root-reducer";
-import { createStore, Store } from "redux";
+import rootReducer, { RootAction, RootState } from "reducers/root-reducer";
+import { applyMiddleware, createStore, Store } from "redux";
+import { createEpicMiddleware } from "redux-observable";
+
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
 
 function configureStore(spawnState: RootState) {
-    return createStore(rootReducer, spawnState);
+    const configuredStore = createStore(
+        rootReducer,
+        spawnState,
+        applyMiddleware(epicMiddleware),
+    );
+
+    epicMiddleware.run(purchaseEpic);
+
+    return configuredStore;
 }
 
 export const initialState: RootState = {

@@ -5,7 +5,7 @@ import authReducer from "reducers/user";
 import { combineReducers } from "redux";
 import { StateType } from "typesafe-actions";
 
-export type RootActions = userA.AuthAction & storeA.StoreAction;
+export type RootAction = userA.AuthAction | storeA.StoreAction;
 
 export const rootReducer = combineReducers({
     auth: authReducer,

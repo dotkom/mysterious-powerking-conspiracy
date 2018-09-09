@@ -22,6 +22,7 @@ module.exports = {
             helpers: srcPath('helpers'),
             models: srcPath('models'),
             reducers: srcPath('reducers'),
+            epics: srcPath('epics'),
         }
     },
 

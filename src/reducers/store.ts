@@ -25,6 +25,15 @@ export const storeReducer = (state: IStore = { items: [], basket: [] }, action: 
             };
         case getType(storeActions.completePurchase):
             return { ...state, basket: [] };
+        case getType(storeActions.purchase.request):
+            alert("REQUESTING");
+            return state;
+        case getType(storeActions.purchase.failure):
+            alert("FAILURE");
+            return state;
+        case getType(storeActions.purchase.success):
+            alert("SUCCESS");
+            return state;
         default:
             return state;
     }
