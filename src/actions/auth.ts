@@ -1,4 +1,4 @@
-import { createAction } from "typesafe-actions";
+import { ActionType, createAction } from "typesafe-actions";
 
 export const login = createAction("auth/LOGIN", (resolve) => (
     (username: string, password: string) => resolve({ username, password })
@@ -7,3 +7,8 @@ export const login = createAction("auth/LOGIN", (resolve) => (
 export const logout = createAction("auth/LOGOUT", (resolve) => (
     () => resolve()
 ));
+
+export type AuthAction = ActionType<
+    typeof login
+    | typeof logout
+>;

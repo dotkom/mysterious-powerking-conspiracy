@@ -1,23 +1,27 @@
-import * as authActions from "actions/auth";
-import * as userActions from "actions/user";
+import * as authA from "actions/auth";
+import * as userA from "actions/user";
 import * as authService from "helpers/auth";
 import { IUser } from "models/user";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, getType, StateType } from "typesafe-actions";
 
-export type UserActions = ActionType<typeof authActions & typeof userActions>;
+export type UserActions = ActionType<typeof authA & typeof userA>;
 
-export default (state: IUser = {}, action: UserActions): IUser => {
+export const userReducer = (state: IUser = {}, action: UserActions): IUser => {
     switch (action.type) {
-        case getType(authActions.login):
+        case getType(authA.login):
             return authService.login(action.payload.username, action.payload.password);
 
-        case getType(authActions.logout):
+        case getType(authA.logout):
             return {};
 
-        case getType(userActions.subtractFromBalance):
+        case getType(userA.subtractFromBalance):
             return { ...state, balance: (state.balance! - action.payload.delta) };
 
         default:
             return state;
     }
 };
+
+export type UserState = StateType<typeof userReducer>;
+
+export default userReducer;

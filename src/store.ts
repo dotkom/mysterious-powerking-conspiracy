@@ -1,12 +1,12 @@
 import { testItems } from "helpers/store";
-import rootReducer, { IRootState } from "reducers/root-reducer";
+import rootReducer, { RootState } from "reducers/root-reducer";
 import { createStore, Store } from "redux";
 
-function configureStore(spawnState: IRootState) {
+function configureStore(spawnState: RootState) {
     return createStore(rootReducer, spawnState);
 }
 
-export const initialState: IRootState = {
+export const initialState: RootState = {
     auth: {},
     store: {
         basket: [],
@@ -14,6 +14,6 @@ export const initialState: IRootState = {
     },
 };
 
-const store: Store<IRootState> = configureStore(initialState);
+const store: Store<RootState> = configureStore(initialState);
 
 export default store;

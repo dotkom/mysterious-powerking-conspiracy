@@ -1,13 +1,12 @@
-import * as storeActions from "actions/store";
-import * as userActions from "actions/user";
+import * as storeA from "actions/store";
+import * as userA from "actions/user";
 import { BasketItem } from "components/BasketItem";
 import { basketPrice } from "helpers/store";
 import { IBasketItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
 
 interface IStateFromProps {
     basket: IBasketItem[];
@@ -20,10 +19,10 @@ interface IDispatchFromProps {
 }
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<ActionType<typeof storeActions & typeof userActions>>,
+    dispatch: Dispatch<userA.UserAction | storeA.StoreAction>,
 ): IDispatchFromProps => ({
-    completePurchase: () => dispatch(storeActions.completePurchase()),
-    subtractFromBalance: (delta: number) => dispatch(userActions.subtractFromBalance(delta)),
+    completePurchase: () => dispatch(storeA.completePurchase()),
+    subtractFromBalance: (delta: number) => dispatch(userA.subtractFromBalance(delta)),
 });
 
 interface IProps extends IStateFromProps, IDispatchFromProps {}
@@ -59,7 +58,7 @@ class BasketContainer extends React.Component<IProps> {
     }
 }
 
-export const Basket = connect<IStateFromProps, IDispatchFromProps, {}, IRootState>(
-    (state: IRootState): IStateFromProps => ({ basket: state.store.basket, balance: state.auth.balance }),
+export const Basket = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
+    (state: RootState): IStateFromProps => ({ basket: state.store.basket, balance: state.auth.balance }),
     mapDispatchToProps,
 )(BasketContainer);

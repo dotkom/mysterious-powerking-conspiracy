@@ -1,12 +1,12 @@
 import * as storeActions from "actions/store";
 import { IBasketItem, IItem } from "models/item";
 import { IStore } from "models/store";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, getType, StateType } from "typesafe-actions";
 import uuidv4 from "uuid/v4";
 
 export type StoreActions = ActionType<typeof storeActions>;
 
-export default (state: IStore = { items: [], basket: [] }, action: StoreActions): IStore => {
+export const storeReducer = (state: IStore = { items: [], basket: [] }, action: StoreActions): IStore => {
     switch (action.type) {
         case getType(storeActions.addToBasket):
             const item: IItem = state.items.filter((e: IItem) => (e.id === action.payload.id))[0];
@@ -29,3 +29,7 @@ export default (state: IStore = { items: [], basket: [] }, action: StoreActions)
             return state;
     }
 };
+
+export type StoreState = StateType<typeof storeReducer>;
+
+export default storeReducer;

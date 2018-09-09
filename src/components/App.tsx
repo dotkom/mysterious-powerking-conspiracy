@@ -1,13 +1,12 @@
-import * as auth from "actions/auth";
+import * as authA from "actions/auth";
 import { Login } from "components/Login";
 import { Store } from "components/Store";
 import { isLoggedIn } from "helpers/auth";
 import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
 
 interface IStateFromProps {
     user: IUser;
@@ -19,12 +18,12 @@ interface IDispatchFromProps {
 
 interface IProps extends IStateFromProps, IDispatchFromProps {}
 
-const mapStateToProps = (state: IRootState): IStateFromProps => ({ user: state.auth });
+const mapStateToProps = (state: RootState): IStateFromProps => ({ user: state.auth });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<ActionType<typeof auth>>,
+  dispatch: Dispatch<authA.AuthAction>,
 ): IDispatchFromProps => ({
-  logout: () => dispatch(auth.logout()),
+  logout: () => dispatch(authA.logout()),
 });
 
 class AppComponent extends React.Component<IProps> {
@@ -51,7 +50,7 @@ class AppComponent extends React.Component<IProps> {
     }
 }
 
-export const App = connect<IStateFromProps, IDispatchFromProps, {}, IRootState>(
+export const App = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
     mapStateToProps,
     mapDispatchToProps,
 )(AppComponent);

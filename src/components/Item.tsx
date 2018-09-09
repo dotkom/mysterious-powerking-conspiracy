@@ -1,7 +1,7 @@
 import { IItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 
 class ItemComponent extends React.Component<IItem> {
     public render() {
@@ -15,4 +15,4 @@ class ItemComponent extends React.Component<IItem> {
     }
 }
 
-export const Item = connect<{}, {}, IItem, IRootState>(null)(ItemComponent);
+export const Item = connect<{}, {}, IItem, RootState>(null)(ItemComponent);

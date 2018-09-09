@@ -1,20 +1,19 @@
-import * as storeActions from "actions/store";
+import * as storeA from "actions/store";
 import { Item } from "components/Item";
 import { IBasketItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
 
 interface IDispatchFromProps {
     removeFromBasket: (id: string) => void;
 }
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<ActionType<typeof storeActions>>,
+    dispatch: Dispatch<storeA.StoreAction>,
 ): IDispatchFromProps => ({
-    removeFromBasket: (id: string) => dispatch(storeActions.removeFromBasket(id)),
+    removeFromBasket: (id: string) => dispatch(storeA.removeFromBasket(id)),
 });
 
 interface IProps extends IDispatchFromProps, IBasketItem {}
@@ -40,7 +39,7 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 }
 
-export const BasketItem = connect<{}, IDispatchFromProps, IBasketItem, IRootState>(
+export const BasketItem = connect<{}, IDispatchFromProps, IBasketItem, RootState>(
     null,
     mapDispatchToProps,
 )(StoreItemContainer);

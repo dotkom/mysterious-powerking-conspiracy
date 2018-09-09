@@ -1,18 +1,17 @@
-import * as authActions from "actions/auth";
+import * as authA from "actions/auth";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
 
 interface IDispatchFromProps {
     login: (username: string, password: string) => void;
 }
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<ActionType<typeof authActions>>,
+    dispatch: Dispatch<authA.AuthAction>,
 ): IDispatchFromProps => ({
-    login: (username: string, password: string) => dispatch(authActions.login(username, password)),
+    login: (username: string, password: string) => dispatch(authA.login(username, password)),
 });
 
 class LoginComponent extends React.Component<IDispatchFromProps> {
@@ -45,4 +44,4 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
     }
 }
 
-export const Login = connect<{}, IDispatchFromProps, {}, IRootState>(null, mapDispatchToProps)(LoginComponent);
+export const Login = connect<{}, IDispatchFromProps, {}, RootState>(null, mapDispatchToProps)(LoginComponent);

@@ -1,9 +1,9 @@
-import * as storeActions from "actions/store";
+import * as storeA from "actions/store";
 import { Item } from "components/Item";
 import { IItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
 import { ActionType } from "typesafe-actions";
 
@@ -12,9 +12,9 @@ interface IDispatchFromProps {
 }
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<ActionType<typeof storeActions>>,
+    dispatch: Dispatch<storeA.StoreAction>,
 ): IDispatchFromProps => ({
-    addToBasket: (id: number) => dispatch(storeActions.addToBasket(id)),
+    addToBasket: (id: number) => dispatch(storeA.addToBasket(id)),
 });
 
 interface IProps extends IDispatchFromProps, IItem {}
@@ -40,7 +40,7 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 }
 
-export const StoreItem = connect<{}, IDispatchFromProps, IItem, IRootState>(
+export const StoreItem = connect<{}, IDispatchFromProps, IItem, RootState>(
     null,
     mapDispatchToProps,
 )(StoreItemContainer);

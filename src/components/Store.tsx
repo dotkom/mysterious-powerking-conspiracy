@@ -4,7 +4,7 @@ import { IItem } from "models/item";
 import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
-import { IRootState } from "reducers/root-reducer";
+import { RootState } from "reducers/root-reducer";
 
 interface IStateFromProps {
     user: IUser;
@@ -38,8 +38,8 @@ class StoreContainer extends React.Component<IStateFromProps> {
     }
 }
 
-export const Store = connect<IStateFromProps, {}, {}, IRootState>(
-    (state: IRootState): IStateFromProps => ({
+export const Store = connect<IStateFromProps, {}, {}, RootState>(
+    (state: RootState): IStateFromProps => ({
         items: state.store.items,
         user: state.auth,
     }),
