@@ -1,5 +1,6 @@
 import { Basket } from "components/Basket";
 import { StoreItem } from "components/StoreItem";
+import { isLoggedIn } from "helpers/auth";
 import { IItem } from "models/item";
 import { IUser } from "models/user";
 import * as React from "react";
@@ -22,9 +23,12 @@ class StoreContainer extends React.Component<IStateFromProps> {
                 <div className="items">
                     {items}
                 </div>
-                <div className="basket">
-                    <Basket />
-                </div>
+                {
+                    isLoggedIn(this.props.user) ?
+                        <div className="basket">
+                            <Basket />
+                        </div> : null
+                }
             </div>
         );
     }

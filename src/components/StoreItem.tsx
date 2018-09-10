@@ -36,7 +36,7 @@ class StoreItemContainer extends React.Component<IProps> {
             <Card
                 elevation={Elevation.ONE}
                 interactive={isLoggedIn(this.props.user)}
-                onClick={isLoggedIn(this.props.user) ? this.addToCart : () => { return; }}
+                onClick={this.addToCart}
             >
                 <Item {...this.props} />
                 {
@@ -48,7 +48,9 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 
     private addToCart() {
-        this.props.addToBasket(this.props.id);
+        if (isLoggedIn(this.props.user)) {
+            this.props.addToBasket(this.props.id);
+        }
     }
 }
 
