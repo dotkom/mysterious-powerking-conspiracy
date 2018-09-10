@@ -1,5 +1,4 @@
 import { IUser } from "models/user";
-import store from "../store";
 
 export const login = (username: string, password: string): IUser => {
     return {
@@ -11,6 +10,6 @@ export const login = (username: string, password: string): IUser => {
     } as IUser;
 };
 
-export const isLoggedIn = (): boolean => (
-    store.getState().auth.token !== undefined
+export const isLoggedIn = (user: IUser): boolean => (
+    user.token !== undefined
 );

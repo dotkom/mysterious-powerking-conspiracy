@@ -1,3 +1,4 @@
+import { Button, FormGroup } from "@blueprintjs/core";
 import * as authA from "actions/auth";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -28,9 +29,31 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
         return (
             <div>
                 <form onSubmit={this.login}>
-                    <input type="text" ref={this.username} placeholder="Username" />
-                    <input type="password" ref={this.password} placeholder="Password" />
-                    <button type="submit">Login</button>
+                    <FormGroup
+                        label="Brukernavn"
+                        labelFor="username"
+                    >
+                        <input
+                            className="bp3-input"
+                            id="username"
+                            type="text"
+                            ref={this.username}
+                            placeholder="Username"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Passord"
+                        labelFor="password"
+                    >
+                        <input
+                            className="bp3-input"
+                            id="password"
+                            type="password"
+                            ref={this.password}
+                            placeholder="Password"
+                        />
+                    </FormGroup>
+                    <Button intent="primary" type="submit">Login</Button>
                 </form>
             </div>
         );

@@ -23,6 +23,7 @@ module.exports = {
             models: srcPath('models'),
             reducers: srcPath('reducers'),
             epics: srcPath('epics'),
+            stylesheets: srcPath('stylesheets'),
         }
     },
 
@@ -30,11 +31,19 @@ module.exports = {
         rules: [
             { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
-        ]
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    { loader: 'css-loader', options: { sourceMap: true } },
+                    { loader: 'sass-loader', options: { sourceMap: true } },
+                ],
+            },
+        ],
     },
 
     externals: {
         'react': 'React',
-        'react-dom': 'ReactDOM'
+        'react-dom': 'ReactDOM',
     }
 };

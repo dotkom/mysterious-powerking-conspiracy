@@ -1,11 +1,17 @@
+import { Button, Card, Elevation } from "@blueprintjs/core";
 import * as storeA from "actions/store";
 import { Item } from "components/Item";
 import { IItem } from "models/item";
+import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
+import { isLoggedIn } from "../helpers/auth";
 
+interface IStateFromProps {
+    user: IUser;
+}
 interface IDispatchFromProps {
     addToBasket: (id: number) => void;
 }
@@ -16,7 +22,7 @@ const mapDispatchToProps = (
     addToBasket: (id: number) => dispatch(storeA.addToBasket(id)),
 });
 
-interface IProps extends IDispatchFromProps, IItem {}
+interface IProps extends IDispatchFromProps, IItem, IStateFromProps {}
 
 class StoreItemContainer extends React.Component<IProps> {
     constructor(props: IProps) {
@@ -27,10 +33,17 @@ class StoreItemContainer extends React.Component<IProps> {
 
     public render() {
         return (
-            <div>
+            <Card
+                elevation={Elevation.ONE}
+                interactive={isLoggedIn(this.props.user)}
+                onClick={isLoggedIn(this.props.user) ? this.addToCart : () => { return; }}
+            >
                 <Item {...this.props} />
-                <button onClick={this.addToCart}>Legg til i handlekurven</button>
-            </div>
+                {
+                    isLoggedIn(this.props.user) &&
+                    <Button icon="plus">Legg til i handlekurven</Button>
+                }
+            </Card>
         );
     }
 
@@ -39,7 +52,7 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 }
 
-export const StoreItem = connect<{}, IDispatchFromProps, IItem, RootState>(
-    null,
+export const StoreItem = connect<IStateFromProps, IDispatchFromProps, IItem, RootState>(
+    ({ auth }) => ({ user: auth }),
     mapDispatchToProps,
 )(StoreItemContainer);

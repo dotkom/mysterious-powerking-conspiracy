@@ -19,14 +19,6 @@ class StoreContainer extends React.Component<IStateFromProps> {
 
         return (
             <div>
-                {/* TODO: Implement navbar */}
-                <div>
-                    <pre>
-                        Name: {this.props.user.name}<br/>
-                        Username: {this.props.user.username}<br/>
-                        Balance: {this.props.user.balance}NOK
-                    </pre>
-                </div>
                 <div className="items">
                     {items}
                 </div>

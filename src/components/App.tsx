@@ -1,7 +1,7 @@
 import * as authA from "actions/auth";
 import { Login } from "components/Login";
+import { Navbar } from "components/Navbar";
 import { Store } from "components/Store";
-import { isLoggedIn } from "helpers/auth";
 import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -34,15 +34,18 @@ class AppComponent extends React.Component<IProps> {
     }
 
     public render() {
-        if (isLoggedIn()) {
-            return (
+        // if (isLoggedIn()) {
+        return (
+            <div className="container">
+                <Navbar />
                 <Store />
-            );
-        } else {
-            return (
-                <Login />
-            );
-        }
+            </div>
+        );
+        // } else {
+        //     return (
+        //         <Login />
+        //     );
+        // }
     }
 
     private logout() {
