@@ -5,7 +5,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
 
 interface IDispatchFromProps {
     addToBasket: (id: number) => void;

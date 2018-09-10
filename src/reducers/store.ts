@@ -1,17 +1,15 @@
-import * as storeActions from "actions/store";
+import * as storeA from "actions/store";
 import { IBasketItem, IItem } from "models/item";
 import { IStore } from "models/store";
-import { ActionType, getType, StateType } from "typesafe-actions";
+import { getType, StateType } from "typesafe-actions";
 import uuidv4 from "uuid/v4";
 
-export type StoreActions = ActionType<typeof storeActions>;
-
-export const storeReducer = (state: IStore = { items: [], basket: [] }, action: StoreActions): IStore => {
+export const storeReducer = (state: IStore = { items: [], basket: [] }, action: storeA.StoreAction): IStore => {
     switch (action.type) {
-        case getType(storeActions.addToBasket):
+        case getType(storeA.addToBasket):
             const item: IItem = state.items.filter((e: IItem) => (e.id === action.payload.id))[0];
             return { ...state, basket: [...state.basket, { ...item, uuid: uuidv4() }] };
-        case getType(storeActions.removeFromBasket):
+        case getType(storeA.removeFromBasket):
             const itemToRemove: IBasketItem = state.basket.filter(
                 (basketItem: IBasketItem) => ( basketItem.uuid === action.payload.uuid ),
             )[0];
@@ -23,16 +21,14 @@ export const storeReducer = (state: IStore = { items: [], basket: [] }, action: 
                     ...state.basket.slice(indexOfItemToRemove + 1),
                 ],
             };
-        case getType(storeActions.completePurchase):
-            return { ...state, basket: [] };
-        case getType(storeActions.purchase.request):
+        case getType(storeA.purchaseRequest):
             alert("REQUESTING");
             return state;
-        case getType(storeActions.purchase.failure):
-            alert("FAILURE");
-            return state;
-        case getType(storeActions.purchase.success):
+        case getType(storeA.purchaseSuccess):
             alert("SUCCESS");
+            return { ...state, basket: [] };
+        case getType(storeA.purchaseFailure):
+            alert("FAILURE");
             return state;
         default:
             return state;

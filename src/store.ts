@@ -1,19 +1,25 @@
-import { purchaseEpic } from "epics/store";
 import { testItems } from "helpers/store";
 import rootReducer, { RootAction, RootState } from "reducers/root-reducer";
-import { applyMiddleware, createStore, Store } from "redux";
-import { createEpicMiddleware } from "redux-observable";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 
-const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
+import {
+    applyMiddleware,
+    compose,
+    createStore,
+    Store,
+} from "redux";
+
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 function configureStore(spawnState: RootState) {
-    const configuredStore = createStore(
+    const configuredStore = createStore<RootState, RootAction, {}, {}>(
         rootReducer,
         spawnState,
-        applyMiddleware(epicMiddleware),
+        composeEnhancers(
+            applyMiddleware(thunk, logger),
+        ),
     );
-
-    epicMiddleware.run(purchaseEpic);
 
     return configuredStore;
 }

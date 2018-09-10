@@ -1,12 +1,11 @@
 import * as storeA from "actions/store";
-import * as userA from "actions/user";
 import { BasketItem } from "components/BasketItem";
 import { basketPrice } from "helpers/store";
 import { IBasketItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
-import { Dispatch } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 
 interface IStateFromProps {
     basket: IBasketItem[];
@@ -14,17 +13,11 @@ interface IStateFromProps {
 }
 
 interface IDispatchFromProps {
-    completePurchase: () => void;
-    subtractFromBalance: (delta: number) => void;
     purchase: () => void;
 }
 
-const mapDispatchToProps = (
-    dispatch: Dispatch<userA.UserAction | storeA.StoreAction>,
-): IDispatchFromProps => ({
-    completePurchase: () => dispatch(storeA.completePurchase()),
-    purchase: () => dispatch(storeA.purchase.request()),
-    subtractFromBalance: (delta: number) => dispatch(userA.subtractFromBalance(delta)),
+const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, void, storeA.StoreAction>): IDispatchFromProps => ({
+    purchase: () => dispatch(storeA.purchase()),
 });
 
 interface IProps extends IStateFromProps, IDispatchFromProps {}
@@ -33,7 +26,6 @@ class BasketContainer extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
 
-        this.completePurchase = this.completePurchase.bind(this);
         this.purchaseDisabled = this.purchaseDisabled.bind(this);
     }
 
@@ -44,16 +36,10 @@ class BasketContainer extends React.Component<IProps> {
                 {this.props.basket.map((item: IBasketItem, index: number) => (
                     <BasketItem key={index} {...item} />
                 ))}
-                <button onClick={this.completePurchase} disabled={this.purchaseDisabled()}>Betal</button>
+                <button onClick={this.props.purchase} disabled={this.purchaseDisabled()}>Betal</button>
                 <p>Saldo etter kjøp: {this.props.balance! - basketPrice(this.props.basket)}NOK.</p>
-                <button onClick={this.props.purchase}>TEST NEW FEATURE!1!!</button>
             </div>
         );
-    }
-
-    private completePurchase() {
-        this.props.completePurchase();
-        this.props.subtractFromBalance(basketPrice(this.props.basket));
     }
 
     private purchaseDisabled(): true | undefined {
