@@ -1,11 +1,11 @@
 import { Button } from "@blueprintjs/core";
 import * as authA from "actions/auth";
+import { isLoggedIn } from "helpers/auth";
+import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
+import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
-import { isLoggedIn } from "../helpers/auth";
-import { IUser } from "../models/user";
-import { RootState } from "../reducers/root-reducer";
 import { Login } from "./Login";
 
 interface IStateFromProps {
