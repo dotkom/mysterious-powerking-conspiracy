@@ -25,6 +25,7 @@ function configureStore(spawnState: RootState) {
 }
 
 export const initialState: RootState = {
+    // REMOVE THIS.
     auth: {},
     store: {
         basket: [],

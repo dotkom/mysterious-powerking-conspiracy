@@ -1,11 +1,12 @@
+import { Tag } from "@blueprintjs/core";
 import * as storeA from "actions/store";
-import { BasketItem } from "components/BasketItem";
 import { basketPrice } from "helpers/store";
 import { IBasketItem } from "models/item";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
+// import { BasketItem } from "components/BasketItem";
 
 interface IStateFromProps {
     basket: IBasketItem[];
@@ -31,13 +32,10 @@ class BasketContainer extends React.Component<IProps> {
 
     public render() {
         return (
-            <div>
-                <h2>Handlekurv</h2>
-                {this.props.basket.map((item: IBasketItem, index: number) => (
-                    <BasketItem key={index} {...item} />
-                ))}
-                <button onClick={this.props.purchase} disabled={this.purchaseDisabled()}>Betal</button>
-                <p>Saldo etter kjøp: {this.props.balance! - basketPrice(this.props.basket)}NOK.</p>
+            <div className="basket">
+                <Tag large icon="shopping-cart">{this.props.basket.length} artikler</Tag>
+                <Tag large icon="arrow-up" onClick={() => { alert(); }} interactive><b>Vis mer</b></Tag>
+                <Tag large icon="bank-account">Total: <b>{basketPrice(this.props.basket)}kr</b></Tag>
             </div>
         );
     }

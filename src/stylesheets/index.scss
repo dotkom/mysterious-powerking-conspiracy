@@ -25,6 +25,7 @@ body {
       position: relative;
       left: 25vw;
       width: 75vw;
+      padding-bottom: 4rem;
     }
   }
 }
@@ -50,16 +51,18 @@ body {
   border-bottom: 3px solid $white;
 }
 
-.navbar > *:not(:last-child) {
-  margin-bottom: 1rem;
-}
-
-.navbar > div:last-child {
-  margin: auto 0 0 0;
-}
-
-.user-card {
+.userSection {
   display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 25vw;
+  padding: 2rem;
+  background-color: $dark-gray1;
+
+  & h2.bp3-heading {
+    color: $white;
+  }
 
   .user-portrait {
     max-height: 8em;
@@ -82,5 +85,29 @@ h5,
 h6 {
   &.bp3-heading {
     font-weight: 400;
+  }
+}
+
+.basket {
+  display: flex;
+  width: 75vw;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: $dark-gray5;
+  position: fixed;
+  bottom: 0;
+  left: 25vw;
+}
+
+.storeItem {
+  display: flex;
+  align-items: center;
+
+  & img {
+    max-width: 25%;
+    height: auto;
+    display: block;
+    width: auto;
+    margin-right: 1rem;
   }
 }

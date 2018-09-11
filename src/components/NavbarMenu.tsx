@@ -1,4 +1,9 @@
-import { Alignment, Button, Navbar } from "@blueprintjs/core";
+import {
+  Alignment,
+  Button,
+  Colors,
+  Navbar
+  } from "@blueprintjs/core";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
@@ -10,10 +15,10 @@ interface IStateFromProps {
 class NavbarMenuContainer extends React.Component<IStateFromProps> {
   public render() {
     return (
-      <Navbar>
+      <Navbar style={{ background: Colors.DARK_GRAY1 }}>
         <Navbar.Group align={Alignment.LEFT}>
-          <Button className="bp3-minimal" icon="help">Hjelp</Button>
-          <Button className="bp3-minimal" icon="git-repo">Rapporter en bug</Button>
+          <Button className="bp3-minimal" icon="help" style={{ color: Colors.WHITE }}>Hjelp</Button>
+          <Button className="bp3-minimal" icon="git-repo" style={{ color: Colors.WHITE }}>Rapporter en bug</Button>
         </Navbar.Group>
         {
           this.props.token &&

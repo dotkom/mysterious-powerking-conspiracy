@@ -18,15 +18,14 @@ class StoreContainer extends React.Component<IStateFromProps> {
         ));
 
         return (
-            <div>
+            <div className="store">
                 <div className="items">
                     {items}
                 </div>
                 {
                     this.props.token ?
-                        <div className="basket">
-                            <Basket />
-                        </div> : null
+                        <Basket />
+                        : null
                 }
             </div>
         );
