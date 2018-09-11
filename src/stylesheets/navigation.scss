@@ -1,0 +1,45 @@
+.navbar {
+  width: 25%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $dark-gray2;
+  height: 100vh;
+
+  &>*:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+.brand {
+  color: $white;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid $white;
+}
+
+.userSection {
+  display: flex;
+  padding: 2rem;
+  background-color: $dark-gray1;
+  /*
+   * This is a cheeky way to avoid having to remove padding on entire
+   * navigation "thing".
+   */
+  margin: auto -2rem -2rem;
+
+  & h2.bp3-heading {
+    color: $white;
+  }
+
+  .user-portrait {
+    max-height: 8em;
+    max-width: 100%;
+    margin-right: 1em;
+  }
+
+  .user {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}

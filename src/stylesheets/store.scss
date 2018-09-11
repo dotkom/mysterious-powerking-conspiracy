@@ -1,0 +1,35 @@
+.store {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-y: auto;
+  padding: 2rem;
+
+  &>.bp3-card {
+    width: calc(33.33% - 1rem);
+    margin-bottom: 1.5rem;
+
+    &:not(:nth-child(3n)) {
+      margin-right: 1.5rem
+    }
+  }
+}
+
+.storeItem {
+  display: flex;
+  align-items: center;
+
+  & img {
+    max-width: 25%;
+    height: auto;
+    display: block;
+    width: auto;
+    margin-right: 1rem;
+  }
+}

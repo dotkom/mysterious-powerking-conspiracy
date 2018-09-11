@@ -5,22 +5,17 @@ import { ThunkDispatch } from "redux-thunk";
 import { ActionType, createAction } from "typesafe-actions";
 
 // TODO: Thunk this and dispatch purchaseSuccess from store actions to clean basket
-export const loginSuccess = createAction("auth/LOGIN_SUCCESS", (resolve) => (
-    (username: string, password: string) => resolve({ username, password })
-));
+export const loginSuccess = createAction("auth/LOGIN_SUCCESS");
 export const loginRequest = createAction("store/LOGIN_REQUEST");
 // export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
 
-export function signIn(
-    username: string,
-    password: string,
-): (dispatch: Dispatch<AuthAction | storeA.StoreAction>) => void {
+export function signIn(rfid: string): (dispatch: Dispatch<AuthAction | storeA.StoreAction>) => void {
     return (
         dispatch: ThunkDispatch<RootState, void, storeA.StoreAction | AuthAction>,
     ) => {
         dispatch(loginRequest());
         dispatch(storeA.clearBasket()); // clean up basket
-        dispatch(loginSuccess(username, password));
+        dispatch(loginSuccess());
     };
 }
 

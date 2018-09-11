@@ -5,71 +5,54 @@ import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
 
 import {
-    Button,
     Card,
+    Colors,
     Elevation,
-    FormGroup,
 } from "@blueprintjs/core";
 
 interface IDispatchFromProps {
-    signIn: (username: string, password: string) => void;
+    signIn: (rfid: string) => void;
 }
 
 const mapDispatchToProps = (
     dispatch: ThunkDispatch<RootState, void, authA.AuthAction>,
 ): IDispatchFromProps => ({
-    signIn: (username: string, password: string) => dispatch(authA.signIn(username, password)),
+    signIn: (token: string) => dispatch(authA.signIn(token)),
 });
 
 class LoginComponent extends React.Component<IDispatchFromProps> {
-    private username = React.createRef<HTMLInputElement>();
-    private password = React.createRef<HTMLInputElement>();
-
     constructor(props: IDispatchFromProps) {
         super(props);
 
-        this.login = this.login.bind(this);
+        this.keyListener = this.keyListener.bind(this);
     }
 
     public render() {
         return (
-            <Card elevation={Elevation.ONE}>
-                <form onSubmit={this.login}>
-                    <FormGroup
-                        label="Brukernavn"
-                        labelFor="username"
-                    >
-                        <input
-                            className="bp3-input"
-                            id="username"
-                            type="text"
-                            ref={this.username}
-                            placeholder="Username"
-                        />
-                    </FormGroup>
-                    <FormGroup
-                        label="Passord"
-                        labelFor="password"
-                    >
-                        <input
-                            className="bp3-input"
-                            id="password"
-                            type="password"
-                            ref={this.password}
-                            placeholder="Password"
-                        />
-                    </FormGroup>
-                    <Button intent="primary" type="submit">Login</Button>
-                </form>
+            <Card elevation={Elevation.ONE} style={{ color: Colors.WHITE, background: Colors.DARK_GRAY1 }}>
+                <p>Vennligst <em>beep</em> adgangskortet ditt for å logge inn.</p>
             </Card>
         );
     }
 
-    private login() {
-        this.props.signIn(
-            this.username.current!.value,
-            this.password.current!.value,
-        );
+    public componentDidMount() {
+        window.addEventListener("keydown", this.keyListener);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener("keydown", this.keyListener);
+    }
+
+    /**
+     * TODO:
+     * This is where you want to add the input to a buffer (the RFID) and dispatch on
+     * enter. You also want to clear it regularly just in case.
+     */
+
+    private keyListener(e: KeyboardEvent) {
+        if (e.keyCode === 13) {
+            this.props.signIn("phoney");
+        }
     }
 }
 

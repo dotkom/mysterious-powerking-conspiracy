@@ -16,7 +16,7 @@ export const userReducer = (state: IUser = {}, action: UserActions): IUser => {
         case getType(authA.loginSuccess):
             AppToaster.dismiss("toast/LOGIN_REQUEST_TOAST");
             AppToaster.show({ message: "Du er nå logget inn.", intent: "success", timeout: 1500 });
-            return authService.login(action.payload.username, action.payload.password);
+            return authService.login("phoney");
 
         // case getType(authA.loginFailure):
         //     AppToaster.dismiss("toast/LOGIN_REQUEST_TOAST");
