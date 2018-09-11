@@ -1,18 +1,24 @@
-import { Button, FormGroup } from "@blueprintjs/core";
 import * as authA from "actions/auth";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
-import { Dispatch } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
+import {
+    Button,
+    Card,
+    Elevation,
+    FormGroup,
+} from "@blueprintjs/core";
 
 interface IDispatchFromProps {
-    login: (username: string, password: string) => void;
+    signIn: (username: string, password: string) => void;
 }
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<authA.AuthAction>,
+    dispatch: ThunkDispatch<RootState, void, authA.AuthAction>,
 ): IDispatchFromProps => ({
-    login: (username: string, password: string) => dispatch(authA.login(username, password)),
+    signIn: (username: string, password: string) => dispatch(authA.signIn(username, password)),
 });
 
 class LoginComponent extends React.Component<IDispatchFromProps> {
@@ -27,7 +33,7 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
 
     public render() {
         return (
-            <div>
+            <Card elevation={Elevation.ONE}>
                 <form onSubmit={this.login}>
                     <FormGroup
                         label="Brukernavn"
@@ -55,12 +61,12 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
                     </FormGroup>
                     <Button intent="primary" type="submit">Login</Button>
                 </form>
-            </div>
+            </Card>
         );
     }
 
     private login() {
-        this.props.login(
+        this.props.signIn(
             this.username.current!.value,
             this.password.current!.value,
         );

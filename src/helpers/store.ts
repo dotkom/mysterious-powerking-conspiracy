@@ -19,6 +19,12 @@ export const testItems: IItem[] = [
         name: "Lada",
         price: 150,
     },
+    {
+        description: "Mors nudler.",
+        id: 4,
+        name: "MAMA Nudel",
+        price: 20,
+    },
 ];
 
 export function basketPrice(basket: IBasketItem[]): number {

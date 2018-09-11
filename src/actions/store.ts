@@ -12,6 +12,8 @@ export const removeFromBasket = createAction("store/REMOVE_FROM_BASKET", (resolv
     (uuid: string) => resolve({ uuid })
 ));
 
+export const clearBasket = createAction("store/CLEAR_BASKET");
+
 export const purchaseRequest = createAction("store/PURCHASE_REQUEST");
 export const purchaseSuccess = createAction("store/PURCHASE_SUCCESS");
 export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
@@ -40,4 +42,5 @@ export type StoreAction = ActionType<
     | typeof purchaseRequest
     | typeof purchaseSuccess
     | typeof purchaseFailure
+    | typeof clearBasket
     >;

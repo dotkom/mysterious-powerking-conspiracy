@@ -1,7 +1,6 @@
 import { Button, Card, Elevation } from "@blueprintjs/core";
 import * as storeA from "actions/store";
 import { Item } from "components/Item";
-import { isLoggedIn } from "helpers/auth";
 import { IItem } from "models/item";
 import { IUser } from "models/user";
 import * as React from "react";
@@ -35,12 +34,12 @@ class StoreItemContainer extends React.Component<IProps> {
         return (
             <Card
                 elevation={Elevation.ONE}
-                interactive={isLoggedIn(this.props.user)}
+                interactive={!!this.props.user.token}
                 onClick={this.addToCart}
             >
                 <Item {...this.props} />
                 {
-                    isLoggedIn(this.props.user) &&
+                    this.props.user.token &&
                     <Button icon="plus">Legg til i handlekurven</Button>
                 }
             </Card>
@@ -48,7 +47,7 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 
     private addToCart() {
-        if (isLoggedIn(this.props.user)) {
+        if (this.props.user.token) {
             this.props.addToBasket(this.props.id);
         }
     }

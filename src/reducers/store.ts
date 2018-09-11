@@ -1,4 +1,5 @@
 import * as storeA from "actions/store";
+import { AppToaster } from "helpers/toaster";
 import { IBasketItem, IItem } from "models/item";
 import { IStore } from "models/store";
 import { getType, StateType } from "typesafe-actions";
@@ -8,11 +9,18 @@ export const storeReducer = (state: IStore = { items: [], basket: [] }, action: 
     switch (action.type) {
         case getType(storeA.addToBasket):
             const item: IItem = state.items.filter((e: IItem) => (e.id === action.payload.id))[0];
+            AppToaster.show({ message: `Lagt til ${item.name} i handlekurven.`, timeout: 1000 });
             return { ...state, basket: [...state.basket, { ...item, uuid: uuidv4() }] };
+
         case getType(storeA.removeFromBasket):
             const itemToRemove: IBasketItem = state.basket.filter(
-                (basketItem: IBasketItem) => ( basketItem.uuid === action.payload.uuid ),
+                (basketItem: IBasketItem) => (basketItem.uuid === action.payload.uuid),
             )[0];
+            AppToaster.show({
+                intent: "warning",
+                message: `Fjernet 1x ${itemToRemove.name} fra handlekurven.`,
+                timeout: 1000,
+            });
             const indexOfItemToRemove: number = state.basket.indexOf(itemToRemove);
             return {
                 ...state,
@@ -21,15 +29,27 @@ export const storeReducer = (state: IStore = { items: [], basket: [] }, action: 
                     ...state.basket.slice(indexOfItemToRemove + 1),
                 ],
             };
+
         case getType(storeA.purchaseRequest):
-            alert("REQUESTING");
+            AppToaster.show(
+                { message: "Forsøker å gjennomføre handel...", intent: "primary" },
+                "toast/PURCHASE_REQUEST",
+            );
             return state;
+
         case getType(storeA.purchaseSuccess):
-            alert("SUCCESS");
+            AppToaster.dismiss("toast/PURCHASE_REQUEST");
+            AppToaster.show({ message: "Handel gjennomført! Takk for din handel.", intent: "success", timeout: 2000 });
             return { ...state, basket: [] };
+
         case getType(storeA.purchaseFailure):
-            alert("FAILURE");
+            AppToaster.dismiss("toast/PURCHASE_REQUEST");
+            AppToaster.show({ message: "Kunne ikke gjennomføre handel.", intent: "danger" });
             return state;
+
+        case getType(storeA.clearBasket):
+            return { ...state, basket: [] };
+
         default:
             return state;
     }

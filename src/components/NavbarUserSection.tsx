@@ -1,6 +1,5 @@
-import { Button } from "@blueprintjs/core";
+import { Button, Card, Elevation } from "@blueprintjs/core";
 import * as authA from "actions/auth";
-import { isLoggedIn } from "helpers/auth";
 import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -12,21 +11,16 @@ interface IStateFromProps {
   user: IUser;
 }
 
-interface IDispatchFromProps {
-  logout: () => void;
-}
-
-interface IProps extends IStateFromProps, IDispatchFromProps {}
-
-class NavbarUserSectionContainer extends React.Component<IProps> {
+class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
   public render() {
-    if (isLoggedIn(this.props.user)) {
+    if (this.props.user.token) {
       return (
-        <div className="user">
-          <h3 className="bp3-heading">{this.props.user.name}</h3>
-          <h6 className="bp3-heading">Saldo: {this.props.user.balance}</h6>
-          <Button intent="danger" onClick={this.props.logout}>Logg ut</Button>
-        </div>
+        <Card elevation={Elevation.ONE}>
+          <div className="user">
+            <h3 className="bp3-heading">{this.props.user.name}</h3>
+            <h6 className="bp3-heading">Saldo: {this.props.user.balance}</h6>
+          </div>
+        </Card>
       );
     }
 
@@ -34,9 +28,6 @@ class NavbarUserSectionContainer extends React.Component<IProps> {
   }
 }
 
-export const NavbarUserSection = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
+export const NavbarUserSection = connect<IStateFromProps, {}, {}, RootState>(
   (state: RootState) => ({ user: state.auth }),
-  (dispatch: Dispatch<authA.AuthAction>): IDispatchFromProps => ({
-    logout: () => dispatch(authA.logout()),
-  }),
 )(NavbarUserSectionContainer);

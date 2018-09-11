@@ -1,5 +1,9 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
+body {
+  overflow-x: hidden;
+}
+
 .container {
   min-height: 100vh;
   max-width: 100vw;
@@ -27,12 +31,14 @@
 
 .items {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 
   &>.bp3-card {
     width: calc(33.33% - 1rem);
+    margin-bottom: 1.5rem;
 
-    &:not(:nth-child(3)) {
+    &:not(:nth-child(3n)) {
       margin-right: 1.5rem
     }
   }

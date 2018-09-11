@@ -9,7 +9,3 @@ export const login = (username: string, password: string): IUser => {
         username,
     } as IUser;
 };
-
-export const isLoggedIn = (user: IUser): boolean => (
-    user.token !== undefined
-);
