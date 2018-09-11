@@ -18,7 +18,7 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
           <img src={Portrait} alt="Portrait of user" className="user-portrait" />
           <div className="user">
             <h2 className="bp3-heading">{this.props.user.name}</h2>
-            <Tag large intent="primary" icon="bank-account">
+            <Tag large icon="bank-account">
               <b>{this.props.user.balance}kr</b>
             </Tag>
           </div>

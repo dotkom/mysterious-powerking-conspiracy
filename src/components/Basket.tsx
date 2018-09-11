@@ -34,7 +34,6 @@ class BasketContainer extends React.Component<IProps> {
         return (
             <div className="basket">
                 <Tag large icon="shopping-cart">{this.props.basket.length} artikler</Tag>
-                <Tag large icon="arrow-up" onClick={() => { alert(); }} interactive><b>Vis mer</b></Tag>
                 <Tag large icon="bank-account">Total: <b>{basketPrice(this.props.basket)}kr</b></Tag>
             </div>
         );
