@@ -27,7 +27,7 @@ How to ~koke~ contribute to this project:
 - Wait for approval
 - Profit!
 
-### License
+## License
 
 ```
     Nibble revision 3 is a front-end for an in-office store.
