@@ -23,7 +23,19 @@ export const testItems: IItem[] = [
         description: "Mors nudler.",
         id: 4,
         name: "MAMA Nudel",
-        price: 20,
+        price: 10,
+    },
+    {
+        description: "Energi på boks.",
+        id: 5,
+        name: "Powerking",
+        price: 8,
+    },
+    {
+        description: "Sprudlende glede.",
+        id: 6,
+        name: "Moët Champagne",
+        price: 9,
     },
 ];
 

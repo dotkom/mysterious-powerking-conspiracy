@@ -1,10 +1,9 @@
-import { Button, Card, Elevation } from "@blueprintjs/core";
-import * as authA from "actions/auth";
+import { Card, Elevation, Tag } from "@blueprintjs/core";
 import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
-import { Dispatch } from "redux";
+import Portrait from "../assets/portrait.jpg";
 import { Login } from "./Login";
 
 interface IStateFromProps {
@@ -15,10 +14,13 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
   public render() {
     if (this.props.user.token) {
       return (
-        <Card elevation={Elevation.ONE}>
+        <Card elevation={Elevation.FOUR} className="user-card">
+          <img src={Portrait} alt="Portrait of user" className="user-portrait" />
           <div className="user">
-            <h3 className="bp3-heading">{this.props.user.name}</h3>
-            <h6 className="bp3-heading">Saldo: {this.props.user.balance}</h6>
+            <h2 className="bp3-heading">{this.props.user.name}</h2>
+            <Tag large intent="primary" icon="bank-account">
+              <b>{this.props.user.balance}NOK</b>
+            </Tag>
           </div>
         </Card>
       );

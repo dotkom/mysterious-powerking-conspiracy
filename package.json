@@ -13,6 +13,7 @@
     "@types/uuid": "^3.4.4",
     "awesome-typescript-loader": "^5.2.0",
     "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",

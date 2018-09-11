@@ -34,18 +34,12 @@ class AppComponent extends React.Component<IProps> {
     }
 
     public render() {
-        // if (isLoggedIn()) {
         return (
             <div className="container">
                 <Navbar />
                 <Store />
             </div>
         );
-        // } else {
-        //     return (
-        //         <Login />
-        //     );
-        // }
     }
 
     private logout() {
