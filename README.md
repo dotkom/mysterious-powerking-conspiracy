@@ -14,3 +14,15 @@ probably find one for chrome/vivaldi/etc. as well), and [React Developer Tools](
 ## Screenshots
 
 Will be added soon(tm).
+
+## Contributing
+
+How to ~koke~ contribute to this project:
+
+- Fork the project
+- `git checkout -b <name-of-your-new-branch>`
+- _keyboard clattering_
+- Push to your branch
+- Create a pull request
+- Wait for approval
+- Profit!
