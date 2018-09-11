@@ -38,7 +38,7 @@ export const testItems: IItem[] = [
         price: 9,
     },
     {
-        description: "Super kult produkt.",
+        description: "Superkult produkt.",
         id: 7,
         name: "SuperProdukt 12",
         price: 49,
