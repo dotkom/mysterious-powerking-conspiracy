@@ -1,18 +1,27 @@
+import * as authA from "actions/auth";
+import * as React from "react";
+import { connect } from "react-redux";
+import { RootState } from "reducers/root-reducer";
+import { Dispatch } from "redux";
+
 import {
   Alignment,
   Button,
   Colors,
-  Navbar
-  } from "@blueprintjs/core";
-import * as React from "react";
-import { connect } from "react-redux";
-import { RootState } from "reducers/root-reducer";
+  Navbar,
+} from "@blueprintjs/core";
 
 interface IStateFromProps {
   token?: string;
 }
 
-class NavbarMenuContainer extends React.Component<IStateFromProps> {
+interface IDispatchFromProps {
+  logout: () => void;
+}
+
+interface IProps extends IStateFromProps, IDispatchFromProps {}
+
+class NavbarMenuContainer extends React.Component<IProps> {
   public render() {
     return (
       <Navbar style={{ background: Colors.DARK_GRAY1 }}>
@@ -25,7 +34,7 @@ class NavbarMenuContainer extends React.Component<IStateFromProps> {
           <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
             <Button className="bp3-minimal" icon="bank-account"></Button>
-            <Button className="bp3-minimal" icon="log-out"></Button>
+            <Button className="bp3-minimal" icon="log-out" onClick={this.props.logout}></Button>
           </Navbar.Group>
         }
       </Navbar>
@@ -33,6 +42,9 @@ class NavbarMenuContainer extends React.Component<IStateFromProps> {
   }
 }
 
-export const NavbarMenu = connect<IStateFromProps, {}, {}, RootState>(
+export const NavbarMenu = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
   (state: RootState) => ({ token: state.auth.token }),
+  (dispatch: Dispatch<authA.AuthAction>) => ({
+    logout: () => dispatch(authA.logout()),
+  }),
 )(NavbarMenuContainer);
