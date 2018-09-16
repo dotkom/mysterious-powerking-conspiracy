@@ -17,7 +17,7 @@
   border-bottom: 3px solid $white;
 }
 
-.userSection {
+.user-section {
   display: flex;
   padding: 2rem;
   background-color: $dark-gray1;
@@ -27,7 +27,7 @@
    */
   margin: auto -2rem -2rem;
 
-  & h2.bp3-heading {
+  h2.bp3-heading {
     color: $white;
   }
 
@@ -42,4 +42,10 @@
     flex-direction: column;
     justify-content: space-around;
   }
+}
+
+.login {
+  background-color: $dark-gray1;
+  color: $white;
+  margin-top: auto;
 }

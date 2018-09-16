@@ -23,7 +23,7 @@ export const userReducer = (state: IUser = {}, action: UserActions): IUser => {
         //     AppToaster.show({ message: "Kunne ikke logge deg inn.", intent: "danger" });
 
         case getType(authA.logout):
-            AppToaster.show({ message: "Du er nå logget ut.", intent: "warning" });
+            AppToaster.show({ message: "Du er nå logget ut.", intent: "warning", timeout: 1500 });
             return {};
 
         case getType(userA.subtractFromBalance):

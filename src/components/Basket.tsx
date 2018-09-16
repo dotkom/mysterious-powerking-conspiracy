@@ -6,7 +6,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
-// import { BasketItem } from "components/BasketItem";
 
 interface IStateFromProps {
     basket: IBasketItem[];

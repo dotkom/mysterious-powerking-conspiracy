@@ -29,7 +29,7 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
 
     public render() {
         return (
-            <Card elevation={Elevation.ONE} style={{ color: Colors.WHITE, background: Colors.DARK_GRAY1 }}>
+            <Card elevation={Elevation.ONE} className="login">
                 <p>Vennligst <em>beep</em> adgangskortet ditt for å logge inn.</p>
             </Card>
         );

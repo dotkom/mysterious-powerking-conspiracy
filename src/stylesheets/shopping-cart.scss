@@ -1,0 +1,42 @@
+.shopping-cart {
+  background-color: $dark-gray1;
+  color: $white;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+
+  .bp3-heading {
+    color: $white;
+  }
+
+  hr {
+    margin-bottom: 1rem;
+  }
+
+  .shopping-cart-item {
+    background-color: $dark-gray3;
+    padding: .5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    h4, h5 {
+      margin: 0;
+    }
+
+    h5 {
+      color: $light-gray1;
+    }
+
+    .remove-button {
+      align-self: center;
+    }
+
+    button {
+      background: $dark-gray1;
+    }
+
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+  }
+}

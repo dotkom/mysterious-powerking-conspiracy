@@ -36,7 +36,7 @@ class StoreItemContainer extends React.Component<IProps> {
                 elevation={Elevation.ONE}
                 interactive={!!this.props.user.token}
                 onClick={this.addToCart}
-                className="storeItem"
+                className="store-item"
             >
                 <img src="https://placehold.it/200x200" alt="Placeholder image"/>
                 <Item {...this.props} />

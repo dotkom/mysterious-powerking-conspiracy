@@ -18,6 +18,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.json'],
         alias: {
             actions: srcPath('actions'),
+            assets: srcPath('assets'),
             components: srcPath('components'),
             helpers: srcPath('helpers'),
             models: srcPath('models'),
