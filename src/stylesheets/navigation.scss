@@ -49,3 +49,9 @@
   color: $white;
   margin-top: auto;
 }
+
+@media screen and (max-width: 1600px) {
+  .navbar button .bp3-button-text {
+    display: none;
+  }
+}

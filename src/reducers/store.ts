@@ -5,7 +5,10 @@ import { IStore } from "models/store";
 import { getType, StateType } from "typesafe-actions";
 import uuidv4 from "uuid/v4";
 
-export const storeReducer = (state: IStore = { items: [], basket: [] }, action: storeA.StoreAction): IStore => {
+export const storeReducer = (
+    state: IStore = { items: [], basket: [], meta: { purchasing: false } },
+    action: storeA.StoreAction,
+): IStore => {
     switch (action.type) {
         case getType(storeA.addToBasket):
             const item: IItem = state.items.filter((e: IItem) => (e.id === action.payload.id))[0];
@@ -35,17 +38,17 @@ export const storeReducer = (state: IStore = { items: [], basket: [] }, action: 
                 { message: "Forsøker å gjennomføre handel...", intent: "primary" },
                 "toast/PURCHASE_REQUEST",
             );
-            return state;
+            return { ...state, meta: { purchasing: true } };
 
         case getType(storeA.purchaseSuccess):
             AppToaster.dismiss("toast/PURCHASE_REQUEST");
             AppToaster.show({ message: "Handel gjennomført! Takk for din handel.", intent: "success", timeout: 2000 });
-            return { ...state, basket: [] };
+            return { ...state, basket: [], meta: { purchasing: false } };
 
         case getType(storeA.purchaseFailure):
             AppToaster.dismiss("toast/PURCHASE_REQUEST");
             AppToaster.show({ message: "Kunne ikke gjennomføre handel.", intent: "danger" });
-            return state;
+            return { ...state, meta: { purchasing: false } };
 
         case getType(storeA.clearBasket):
             return { ...state, basket: [] };

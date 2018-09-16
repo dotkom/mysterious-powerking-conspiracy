@@ -29,6 +29,9 @@ export const initialState: RootState = {
     store: {
         basket: [],
         items: testItems,
+        meta: {
+            purchasing: false,
+        },
     },
 };
 

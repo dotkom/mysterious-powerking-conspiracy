@@ -5,6 +5,7 @@ import { ShoppingCart } from "components/ShoppingCart";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
+import { PurchaseButton } from "./PurchaseButton";
 
 interface IStateFromProps {
   token?: string;
@@ -16,9 +17,8 @@ class NavbarContainer extends React.Component<IStateFromProps> {
       <div className="navbar">
         <h1 className="bp3-heading brand"><Icon icon="git-new-branch" iconSize={30} /> Nibble</h1>
         <NavbarMenu />
-        {
-          this.props.token && <ShoppingCart />
-        }
+        { this.props.token && <ShoppingCart /> }
+        { this.props.token && <PurchaseButton /> }
         <NavbarUserSection />
       </div>
     );

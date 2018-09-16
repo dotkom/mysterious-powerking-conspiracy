@@ -21,7 +21,7 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
     } else if (this.props.user.balance! >= this.props.basketPrice) {
       this.intent = "success";
     } else {
-      this.intent = "warning";
+      this.intent = "danger";
     }
 
     if (this.props.user.token) {
