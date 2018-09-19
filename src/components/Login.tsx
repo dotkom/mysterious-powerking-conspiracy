@@ -17,7 +17,7 @@ interface IDispatchFromProps {
 const mapDispatchToProps = (
     dispatch: ThunkDispatch<RootState, void, authA.AuthAction>,
 ): IDispatchFromProps => ({
-    signIn: (token: string) => dispatch(authA.signIn(token)),
+    signIn: (rfid: string) => dispatch(authA.signIn(rfid)),
 });
 
 class LoginComponent extends React.Component<IDispatchFromProps> {

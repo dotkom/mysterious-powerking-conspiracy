@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";
 
 interface IStateFromProps {
-    token?: string;
     items: IItem[];
 }
 
@@ -28,6 +27,5 @@ class StoreContainer extends React.Component<IStateFromProps> {
 export const Store = connect<IStateFromProps, {}, {}, RootState>(
     (state: RootState): IStateFromProps => ({
         items: state.store.items,
-        token: state.auth.token,
     }),
 )(StoreContainer);

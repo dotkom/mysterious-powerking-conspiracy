@@ -17,7 +17,7 @@ import {
 } from "@blueprintjs/core";
 
 interface IStateFromProps {
-  token?: string;
+  id?: number;
   balance?: number;
 }
 
@@ -45,7 +45,7 @@ class NavbarMenuContainer extends React.Component<IProps> {
           </Button>
         </Navbar.Group>
         {
-          this.props.token &&
+          this.props.id &&
           <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
             <Button intent="danger" icon="log-out" onClick={this.props.logout}>Logg ut</Button>
@@ -57,7 +57,7 @@ class NavbarMenuContainer extends React.Component<IProps> {
 }
 
 export const NavbarMenu = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
-  (state: RootState) => ({ token: state.auth.token, balance: state.auth.balance }),
+  (state: RootState) => ({ id: state.auth.id, balance: state.auth.balance }),
   (dispatch: Dispatch<authA.AuthAction>) => ({
     logout: () => dispatch(authA.logout()),
   }),

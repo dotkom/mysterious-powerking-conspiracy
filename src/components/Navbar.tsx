@@ -8,7 +8,7 @@ import { RootState } from "reducers/root-reducer";
 import { PurchaseButton } from "./PurchaseButton";
 
 interface IStateFromProps {
-  token?: string;
+  id?: number;
 }
 
 class NavbarContainer extends React.Component<IStateFromProps> {
@@ -17,8 +17,8 @@ class NavbarContainer extends React.Component<IStateFromProps> {
       <div className="navbar">
         <h1 className="bp3-heading brand"><Icon icon="git-new-branch" iconSize={30} /> Nibble</h1>
         <NavbarMenu />
-        { this.props.token && <ShoppingCart /> }
-        { this.props.token && <PurchaseButton /> }
+        { this.props.id && <ShoppingCart /> }
+        { this.props.id && <PurchaseButton /> }
         <NavbarUserSection />
       </div>
     );
@@ -27,6 +27,6 @@ class NavbarContainer extends React.Component<IStateFromProps> {
 
 export const Navbar = connect<IStateFromProps, {}, {}, RootState>(
   (state: RootState) => ({
-    token: state.auth.token,
+    id: state.auth.id,
   }),
 )(NavbarContainer);

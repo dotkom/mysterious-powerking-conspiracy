@@ -34,7 +34,7 @@ class StoreItemContainer extends React.Component<IProps> {
         return (
             <Card
                 elevation={Elevation.ONE}
-                interactive={!!this.props.user.token}
+                interactive={!!this.props.user.id}
                 onClick={this.addToCart}
                 className="store-item"
             >
@@ -45,7 +45,7 @@ class StoreItemContainer extends React.Component<IProps> {
     }
 
     private addToCart() {
-        if (this.props.user.token) {
+        if (this.props.user.id) {
             this.props.addToBasket(this.props.id);
         }
     }

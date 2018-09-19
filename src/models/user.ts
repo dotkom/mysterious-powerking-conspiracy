@@ -4,3 +4,9 @@ export interface IUser {
     token?: string;
     balance?: number;
 }
+
+export interface ILoginUser {
+    id?: number;
+    name?: string;
+    balance?: number;
+}

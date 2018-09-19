@@ -24,7 +24,7 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
       this.intent = "danger";
     }
 
-    if (this.props.user.token) {
+    if (this.props.user.id) {
       return (
         <div className="user-section">
           <img src={Portrait} alt="Portrait of user" className="user-portrait" />

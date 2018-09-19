@@ -84,7 +84,7 @@ interface IJSONItem {
 }
 
 export function retrieveStoreitems(): Promise<IItem[]> {
-    if (process.env.NODE_ENV !== "prod") { // TODO: fix -- add webpack plugin
+    if (process.env.NODE_ENV === "prod") { // TODO: fix -- add webpack plugin
         return fetch("https://online.ntnu.no/api/v1/inventory/").then(
             (itemsRaw: Response): Promise<IJSONItem[]> => (itemsRaw.json()),
         ).then((items: IJSONItem[]): IItem[] => (
