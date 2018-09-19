@@ -1,4 +1,5 @@
-import { testItems } from "helpers/store";
+import * as storeA from "actions/store";
+import { retrieveStoreitems } from "helpers/store";
 import rootReducer, { RootAction, RootState } from "reducers/root-reducer";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
@@ -28,7 +29,7 @@ export const initialState: RootState = {
     auth: {},
     store: {
         basket: [],
-        items: testItems,
+        items: [],
         meta: {
             purchasing: false,
         },
@@ -36,5 +37,8 @@ export const initialState: RootState = {
 };
 
 const store: Store<RootState> = configureStore(initialState);
+
+// Add items to store
+retrieveStoreitems().then((items) => items.forEach((item) => store.dispatch(storeA.addItem(item))));
 
 export default store;

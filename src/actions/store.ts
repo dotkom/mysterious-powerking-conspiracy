@@ -1,6 +1,7 @@
 import * as authA from "actions/auth";
 import * as userA from "actions/user";
 import { basketPrice } from "helpers/store";
+import { IItem } from "models/item";
 import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
 import { ActionType, createAction } from "typesafe-actions";
@@ -11,6 +12,10 @@ export const addToBasket = createAction("store/ADD_TO_BASKET", (resolve) => (
 
 export const removeFromBasket = createAction("store/REMOVE_FROM_BASKET", (resolve) => (
     (uuid: string) => resolve({ uuid })
+));
+
+export const addItem = createAction("store/ADD_ITEM", (resolve) => (
+    (item: IItem) => resolve({ item })
 ));
 
 export const clearBasket = createAction("store/CLEAR_BASKET");
@@ -45,4 +50,5 @@ export type StoreAction = ActionType<
     | typeof purchaseSuccess
     | typeof purchaseFailure
     | typeof clearBasket
+    | typeof addItem
     >;

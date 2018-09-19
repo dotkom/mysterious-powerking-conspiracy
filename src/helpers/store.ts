@@ -1,6 +1,6 @@
 import { IBasketItem, IItem } from "models/item";
 
-export const testItems: IItem[] = [
+const testItems: IItem[] = [
     {
         description: "Two snickers. Du-uh.",
         id: 0,
@@ -56,6 +56,14 @@ export const testItems: IItem[] = [
         price: 3,
     },
 ];
+
+export function retrieveStoreitems(): Promise<IItem[]> {
+    if (process.env.NODE_ENV === "production") {
+        return new Promise<IItem[]>((resolve) => resolve(testItems));
+    } else {
+        return new Promise<IItem[]>((resolve) => resolve(testItems));
+    }
+}
 
 export function basketPrice(basket: IBasketItem[]): number {
     return basket.reduce<number>((total: number, currentBasketItem: IBasketItem) => (

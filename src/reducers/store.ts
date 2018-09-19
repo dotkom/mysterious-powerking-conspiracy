@@ -10,6 +10,9 @@ export const storeReducer = (
     action: storeA.StoreAction,
 ): IStore => {
     switch (action.type) {
+        case getType(storeA.addItem):
+            return { ...state, items: [...state.items, action.payload.item] };
+
         case getType(storeA.addToBasket):
             const item: IItem = state.items.filter((e: IItem) => (e.id === action.payload.id))[0];
             AppToaster.show({ message: `Lagt til ${item.name} i handlekurven.`, timeout: 1000 });

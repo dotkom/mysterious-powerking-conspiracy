@@ -1,7 +1,5 @@
-import { Basket } from "components/Basket";
 import { StoreItem } from "components/StoreItem";
 import { IItem } from "models/item";
-import { IUser } from "models/user";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "reducers/root-reducer";

@@ -1,6 +1,6 @@
 import { IUser } from "models/user";
 
-export const login = (rfid: string): IUser => {
+const mockLogin = (rfid: string): IUser => {
     return {
         balance: 200,
         id: 0,
@@ -8,3 +8,7 @@ export const login = (rfid: string): IUser => {
         token: "blablabla",
     } as IUser;
 };
+
+export function login(rfid: string): Promise<IUser> {
+    return new Promise<IUser>((resolve) => resolve(mockLogin(rfid)));
+}

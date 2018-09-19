@@ -1,13 +1,16 @@
 import * as storeA from "actions/store";
+import * as auth from "helpers/auth";
+import { IUser } from "models/user";
 import { RootState } from "reducers/root-reducer";
 import { Dispatch } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { ActionType, createAction } from "typesafe-actions";
 
-// TODO: Thunk this and dispatch purchaseSuccess from store actions to clean basket
-export const loginSuccess = createAction("auth/LOGIN_SUCCESS");
-export const loginRequest = createAction("store/LOGIN_REQUEST");
-// export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
+export const loginSuccess = createAction("auth/LOGIN_SUCCESS", (resolve) => (
+    (user: IUser) => resolve({ user })
+));
+export const loginRequest = createAction("auth/LOGIN_REQUEST");
+// export const loginFailure = createAction("auth/LOGIN_FAILURE");
 
 export function signIn(rfid: string): (dispatch: Dispatch<AuthAction | storeA.StoreAction>) => void {
     return (
@@ -15,7 +18,10 @@ export function signIn(rfid: string): (dispatch: Dispatch<AuthAction | storeA.St
     ) => {
         dispatch(loginRequest());
         dispatch(storeA.clearBasket()); // clean up basket
-        dispatch(loginSuccess());
+
+        auth.login(rfid).then((user: IUser) => {
+            dispatch(loginSuccess(user));
+        });
     };
 }
 
@@ -25,4 +31,5 @@ export type AuthAction = ActionType<
     typeof loginSuccess
     | typeof loginRequest
     | typeof logout
+    // | typeof loginFailure
 >;
