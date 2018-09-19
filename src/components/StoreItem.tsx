@@ -38,7 +38,7 @@ class StoreItemContainer extends React.Component<IProps> {
                 onClick={this.addToCart}
                 className="store-item"
             >
-                <img src="https://placehold.it/200x200" alt="Placeholder image"/>
+                <img src={this.props.imageURL || "https://placehold.it/200x200"} alt="Placeholder image"/>
                 <Item {...this.props} />
             </Card>
         );

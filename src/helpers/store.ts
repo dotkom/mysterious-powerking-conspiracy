@@ -57,9 +57,45 @@ const testItems: IItem[] = [
     },
 ];
 
+interface IJSONItem {
+    pk: number;
+    name: string;
+    price: number;
+    description: string;
+    image?: {
+        id: number;
+        name: string;
+        timestamp: string;
+        description: string;
+        thumb: string;
+        original: string;
+        wide: string;
+        lg: string;
+        md: string;
+        sm: string;
+        xs: string;
+        tags: string[];
+        photographer: string;
+    };
+    category: {
+        pk: number;
+        name: string;
+    };
+}
+
 export function retrieveStoreitems(): Promise<IItem[]> {
-    if (process.env.NODE_ENV === "production") {
-        return new Promise<IItem[]>((resolve) => resolve(testItems));
+    if (process.env.NODE_ENV !== "prod") { // TODO: fix -- add webpack plugin
+        return fetch("https://online.ntnu.no/api/v1/inventory/").then(
+            (itemsRaw: Response): Promise<IJSONItem[]> => (itemsRaw.json()),
+        ).then((items: IJSONItem[]): IItem[] => (
+            items.map((item: IJSONItem): IItem => ({
+                description: item.description,
+                id: item.pk,
+                imageURL: item.image ? `https://online.ntnu.no/${item.image.sm}` : undefined,
+                name: item.name,
+                price: item.price,
+            }))
+        ));
     } else {
         return new Promise<IItem[]>((resolve) => resolve(testItems));
     }

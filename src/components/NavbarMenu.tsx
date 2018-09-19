@@ -48,35 +48,7 @@ class NavbarMenuContainer extends React.Component<IProps> {
           this.props.token &&
           <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
-            <Popover
-              popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-            >
-              <Button className="bp3-minimal" icon="bank-account"></Button>
-              <div>
-                <Callout
-                  intent="warning"
-                  className={Classes.CALLOUT_ICON}
-                >
-                   Manuell justering saldo. Dette skal kun brukes i spesielle
-                   tilfeller etter fjerningen av det røde pengeskrinet.
-                   Kontakt trikom-leder hvis du er i tvil om du skal justere
-                   saldoen manuelt.
-                </Callout>
-                <br />
-                <ControlGroup>
-                  <NumericInput
-                    min={0}
-                    value={this.props.balance}
-                  />
-                  <Button
-                    onClick={() => alert()}
-                  >
-                    Bekreft
-                  </Button>
-                </ControlGroup>
-              </div>
-            </Popover>
-            <Button className="bp3-minimal" icon="log-out" onClick={this.props.logout}></Button>
+            <Button intent="danger" icon="log-out" onClick={this.props.logout}>Logg ut</Button>
           </Navbar.Group>
         }
       </Navbar>
