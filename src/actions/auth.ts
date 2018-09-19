@@ -33,15 +33,15 @@ export const authSuccess = createAction("auth/AUTH_SUCCESS", (resolve) => (
     (token: string) => resolve({ token })
 ));
 
-export function authenticate(clientId: string, clientSecret: string): (dispatch: Dispatch<AuthAction>) => void {
+export function authenticate(): (dispatch: Dispatch<AuthAction>) => void {
     return (
         dispatch: ThunkDispatch<RootState, void, AuthAction>,
     ) => {
         dispatch(authRequest());
 
-        auth.authenticate(clientId, clientSecret)
+        auth.authenticate()
             .then((token: string) => dispatch(authSuccess(token)))
-            .catch((error) => dispatch(authFailure()));
+            .catch(() => dispatch(authFailure()));
     };
 }
 
@@ -54,5 +54,5 @@ export type AuthAction = ActionType<
     | typeof authSuccess
     | typeof authRequest
     | typeof authFailure
-    // | typeof loginFailure
+    | typeof loginFailure
 >;

@@ -14,23 +14,20 @@ interface IStateFromProps {
 const mapStateToProps = (state: RootState): IStateFromProps => ({ user: state.auth });
 
 interface IDispatchFromProps {
-    authenticate: (clientId: string, clientSecret: string) => void;
+    authenticate: () => void;
 }
 
 const mapDispatchToProps = (
     dispatch: ThunkDispatch<RootState, void, authA.AuthAction>,
 ): IDispatchFromProps => ({
-    authenticate: (clientId: string, clientSecret: string) => dispatch(authA.authenticate(clientId, clientSecret)),
+    authenticate: () => dispatch(authA.authenticate()),
 });
 
 interface IProps extends IStateFromProps, IDispatchFromProps {}
 
 class AppComponent extends React.Component<IProps> {
     public componentDidMount() {
-        this.props.authenticate(
-            "",
-            "",
-        );
+        this.props.authenticate();
     }
 
     public render() {

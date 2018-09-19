@@ -19,7 +19,10 @@ interface IAuthResponse {
     token_type: string;
 }
 
-export function authenticate(clientId: string, clientSecret: string): Promise<string> {
+export function authenticate(): Promise<string> {
+    const clientId: string = "";
+    const clientSecret: string = "";
+
     return fetch(
         `https://online.ntnu.no/api/v1/auth/?client_id=` +
         `${encodeURIComponent(clientId)}&client_secret=${encodeURIComponent(clientSecret)}` +
