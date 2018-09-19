@@ -7,19 +7,25 @@ import { Dispatch } from "redux";
 import {
   Alignment,
   Button,
+  Callout,
+  Classes,
   Colors,
+  ControlGroup,
   Navbar,
+  NumericInput,
+  Popover,
 } from "@blueprintjs/core";
 
 interface IStateFromProps {
   token?: string;
+  balance?: number;
 }
 
 interface IDispatchFromProps {
   logout: () => void;
 }
 
-interface IProps extends IStateFromProps, IDispatchFromProps {}
+interface IProps extends IStateFromProps, IDispatchFromProps { }
 
 class NavbarMenuContainer extends React.Component<IProps> {
   public render() {
@@ -42,7 +48,34 @@ class NavbarMenuContainer extends React.Component<IProps> {
           this.props.token &&
           <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
-            <Button className="bp3-minimal" icon="bank-account"></Button>
+            <Popover
+              popoverClassName={Classes.POPOVER_CONTENT_SIZING}
+            >
+              <Button className="bp3-minimal" icon="bank-account"></Button>
+              <div>
+                <Callout
+                  intent="warning"
+                  className={Classes.CALLOUT_ICON}
+                >
+                   Manuell justering saldo. Dette skal kun brukes i spesielle
+                   tilfeller etter fjerningen av det røde pengeskrinet.
+                   Kontakt trikom-leder hvis du er i tvil om du skal justere
+                   saldoen manuelt.
+                </Callout>
+                <br />
+                <ControlGroup>
+                  <NumericInput
+                    min={0}
+                    value={this.props.balance}
+                  />
+                  <Button
+                    onClick={() => alert()}
+                  >
+                    Bekreft
+                  </Button>
+                </ControlGroup>
+              </div>
+            </Popover>
             <Button className="bp3-minimal" icon="log-out" onClick={this.props.logout}></Button>
           </Navbar.Group>
         }
@@ -52,7 +85,7 @@ class NavbarMenuContainer extends React.Component<IProps> {
 }
 
 export const NavbarMenu = connect<IStateFromProps, IDispatchFromProps, {}, RootState>(
-  (state: RootState) => ({ token: state.auth.token }),
+  (state: RootState) => ({ token: state.auth.token, balance: state.auth.balance }),
   (dispatch: Dispatch<authA.AuthAction>) => ({
     logout: () => dispatch(authA.logout()),
   }),
