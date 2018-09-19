@@ -31,7 +31,7 @@ export function purchase() {
     ) => {
         dispatch(purchaseRequest());
 
-        fetch("https://github.com/fredrikaugust", { mode: "no-cors" }).then(
+        new Promise<void>((resolve) => resolve()).then(
             () => {
                 dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
                 dispatch(purchaseSuccess());
