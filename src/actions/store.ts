@@ -1,4 +1,5 @@
-import * as userActions from "actions/user";
+import * as authA from "actions/auth";
+import * as userA from "actions/user";
 import { basketPrice } from "helpers/store";
 import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
@@ -20,15 +21,16 @@ export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
 
 export function purchase() {
     return (
-        dispatch: ThunkDispatch<RootState, void, StoreAction | userActions.UserAction>,
+        dispatch: ThunkDispatch<RootState, void, StoreAction | userA.UserAction | authA.AuthAction>,
         getState: () => RootState,
     ) => {
         dispatch(purchaseRequest());
 
         fetch("https://github.com/fredrikaugust", { mode: "no-cors" }).then(
             () => {
-                dispatch(userActions.subtractFromBalance(basketPrice(getState().store.basket)));
+                dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
                 dispatch(purchaseSuccess());
+                dispatch(authA.logout());
             }, (error) => (
                 dispatch(purchaseFailure())
             ),

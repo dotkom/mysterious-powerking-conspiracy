@@ -22,11 +22,6 @@ class StoreContainer extends React.Component<IStateFromProps> {
                 <div className="items">
                     {items}
                 </div>
-                {
-                    this.props.token ?
-                        <Basket />
-                        : null
-                }
             </div>
         );
     }

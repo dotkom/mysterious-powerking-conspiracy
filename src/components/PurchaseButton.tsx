@@ -17,10 +17,35 @@ interface IDispatchFromProps {
   purchase: () => void;
 }
 
-interface IProps extends IStateFromProps, IDispatchFromProps {}
+interface IProps extends IStateFromProps, IDispatchFromProps { }
 
 class PurchaseButtonContainer extends React.Component<IProps> {
   public render() {
+    let purchaseButtonLabelText: string;
+
+    switch (this.props.basket.length) {
+      case 1:
+        purchaseButtonLabelText = `Kjøp 1 vare for ${this.props.basket[0].price}kr`;
+        break;
+      default:
+        purchaseButtonLabelText = `Kjøp ${this.props.basket.length} varer for ${basketPrice(this.props.basket)}kr`;
+        break;
+    }
+
+    if (this.props.basket.length === 0) {
+      purchaseButtonLabelText = "Legg til en vare for å kunne handle";
+    } else {
+      if (basketPrice(this.props.basket) > this.props.balance) {
+        purchaseButtonLabelText =
+          `Du har ikke nok penger (mangler ${this.props.balance - basketPrice(this.props.basket)}).`;
+      } else {
+        purchaseButtonLabelText =
+          `Kjøp ${this.props.basket.length}
+           vare${this.props.basket.length === 1 ? "" : "r"}
+           for ${basketPrice(this.props.basket)}kr`;
+      }
+    }
+
     return (
       <Button
         large
@@ -34,7 +59,7 @@ class PurchaseButtonContainer extends React.Component<IProps> {
         {
           this.props.purchasing ?
             <Spinner size={24} intent="none" /> :
-            "Kjøp"
+            purchaseButtonLabelText
         }
       </Button>
     );
