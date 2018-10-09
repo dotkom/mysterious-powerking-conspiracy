@@ -1,9 +1,10 @@
 import { ILoginUser } from "models/user";
+import secrets from "../secrets";
 
 const mockLogin = (rfid: string): ILoginUser => {
     return {
-        balance: 200,
-        id: 1,
+        balance: 29,
+        id: 1429,
         name: "Fredrik A. Madsen-Malmo",
     };
 };
@@ -20,12 +21,9 @@ interface IAuthResponse {
 }
 
 export function authenticate(): Promise<string> {
-    const clientId: string = "";
-    const clientSecret: string = "";
-
     return fetch(
         `https://online.ntnu.no/api/v1/auth/?client_id=` +
-        `${encodeURIComponent(clientId)}&client_secret=${encodeURIComponent(clientSecret)}` +
+        `${encodeURIComponent(secrets.clientId)}&client_secret=${encodeURIComponent(secrets.clientSecret)}` +
         "&grant_type=client_credentials",
         { method: "post" },
     ).then((response: Response) => {

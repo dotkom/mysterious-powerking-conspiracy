@@ -31,15 +31,36 @@ export function purchase() {
     ) => {
         dispatch(purchaseRequest());
 
-        new Promise<void>((resolve) => resolve()).then(
-            () => {
+        if (process.env.NODE_ENV === "development") {
+            dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
+            dispatch(purchaseSuccess());
+            dispatch(authA.logout());
+        } else {
+            fetch(`https://online.ntnu.no/api/v1/orderline/`, {
+                body: JSON.stringify({
+                    orders: getState().store.basket,
+                    user: getState().auth.id,
+                }),
+                headers: {
+                    "Authorization": `Bearer ${getState().auth.token}`,
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+            }).then((res) => {
+                if (res.status === 401) {
+                    authA.authenticate()(dispatch);
+                    return purchase();
+                }
+
+                return res.json();
+            }).then(() => {
                 dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
                 dispatch(purchaseSuccess());
                 dispatch(authA.logout());
-            }, (error) => (
+            }, () => (
                 dispatch(purchaseFailure())
-            ),
-        );
+            ));
+        }
     };
 }
 

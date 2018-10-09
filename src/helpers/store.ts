@@ -86,7 +86,7 @@ interface IJSONItem {
 export function retrieveStoreitems(): Promise<IItem[]> {
     if (process.env.NODE_ENV === "production") {
         return fetch("https://online.ntnu.no/api/v1/inventory/").then(
-            (itemsRaw: Response): Promise<IJSONItem[]> => (itemsRaw.json()),
+            (itemsRaw: Response): Promise<IJSONItem[]> => itemsRaw.json(),
         ).then((items: IJSONItem[]): IItem[] => (
             items.map((item: IJSONItem): IItem => ({
                 description: item.description,
