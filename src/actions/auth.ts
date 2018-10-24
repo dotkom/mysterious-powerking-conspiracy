@@ -14,16 +14,18 @@ export const loginFailure = createAction("auth/LOGIN_FAILURE");
 
 export function signIn(rfid: string): (
     dispatch: ThunkDispatch<RootState, void, AuthAction | storeA.StoreAction>,
+    getStore: () => RootState,
 ) => void {
     return (
         dispatch: ThunkDispatch<RootState, void, storeA.StoreAction | AuthAction>,
+        getStore: () => RootState,
     ) => {
         dispatch(loginRequest());
         dispatch(storeA.clearBasket());
 
-        auth.login(rfid).then((user: ILoginUser) => {
+        auth.login(rfid, getStore().auth.token || "").then((user: ILoginUser) => {
             dispatch(loginSuccess(user));
-        });
+        }).catch(() => dispatch(loginFailure()));
     };
 }
 

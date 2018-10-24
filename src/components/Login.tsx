@@ -6,7 +6,6 @@ import { ThunkDispatch } from "redux-thunk";
 
 import {
     Card,
-    Colors,
     Elevation,
 } from "@blueprintjs/core";
 
@@ -43,15 +42,9 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
         window.removeEventListener("keydown", this.keyListener);
     }
 
-    /**
-     * TODO:
-     * This is where you want to add the input to a buffer (the RFID) and dispatch on
-     * enter. You also want to clear it regularly just in case.
-     */
-
     private keyListener(e: KeyboardEvent) {
         if (e.keyCode === 13) {
-            this.props.signIn("phoney");
+            this.props.signIn("");
         }
     }
 }
