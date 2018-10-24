@@ -28,6 +28,10 @@ export async function login(rfid: string, token: string): Promise<ILoginUser> {
             { headers: { Authorization: `Bearer ${token}` } },
         );
 
+        if (res.status === 401) {
+            throw new Error("Outdated bearer token");
+        }
+
         if (res.ok) {
             const data = await res.json() as ILoginResponse;
 

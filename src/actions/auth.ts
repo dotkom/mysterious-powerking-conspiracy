@@ -16,7 +16,7 @@ export function signIn(rfid: string): (
     dispatch: ThunkDispatch<RootState, void, AuthAction | storeA.StoreAction>,
     getStore: () => RootState,
 ) => void {
-    return (
+    const callback = (
         dispatch: ThunkDispatch<RootState, void, storeA.StoreAction | AuthAction>,
         getStore: () => RootState,
     ) => {
@@ -25,8 +25,15 @@ export function signIn(rfid: string): (
 
         auth.login(rfid, getStore().auth.token || "").then((user: ILoginUser) => {
             dispatch(loginSuccess(user));
-        }).catch(() => dispatch(loginFailure()));
+        }).catch(() => {
+            authenticate()(dispatch);
+            dispatch(loginFailure());
+            callback(dispatch, getStore); // recurse
+
+        });
     };
+
+    return callback;
 }
 
 export const authRequest = createAction("auth/AUTH_REQUEST");

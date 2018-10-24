@@ -44,43 +44,42 @@ function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
 }
 
 export function purchase() {
-    return (
+    const callback = async (
         dispatch: ThunkDispatch<RootState, void, StoreAction | userA.UserAction | authA.AuthAction>,
-        getState: () => RootState,
+        getStore: () => RootState,
     ) => {
         dispatch(purchaseRequest());
 
         if (process.env.NODE_ENV === "development") {
-            dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
+            dispatch(userA.subtractFromBalance(basketPrice(getStore().store.basket)));
             dispatch(purchaseSuccess());
             dispatch(authA.logout());
         } else {
-            fetch(`https://online.ntnu.no/api/v1/orderline/`, {
+            const res = await fetch(`https://online.ntnu.no/api/v1/orderline/`, {
                 body: JSON.stringify({
-                    orders: prepareBasket(getState().store.basket),
-                    user: getState().auth.id,
+                    orders: prepareBasket(getStore().store.basket),
+                    user: getStore().auth.id,
                 }),
                 headers: {
-                    "Authorization": `Bearer ${getState().auth.token}`,
+                    "Authorization": `Bearer ${getStore().auth.token}`,
                     "Content-Type": "application/json",
                 },
                 method: "POST",
-            }).then((res) => {
-                if (res.status === 401) {
-                    authA.authenticate()(dispatch);
-                    return purchase();
-                }
+            });
 
-                return res.json();
-            }).then(() => {
-                dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
-                dispatch(purchaseSuccess());
-                dispatch(authA.logout());
-            }, () => (
-                dispatch(purchaseFailure())
-            ));
+            if (res.status === 401) {
+                authA.authenticate()(dispatch);
+                dispatch(purchaseFailure());
+                callback(dispatch, getStore); // recurse
+            }
+
+            dispatch(userA.subtractFromBalance(basketPrice(getStore().store.basket)));
+            dispatch(purchaseSuccess());
+            dispatch(authA.logout());
         }
     };
+
+    return callback;
 }
 
 export type StoreAction = ActionType<

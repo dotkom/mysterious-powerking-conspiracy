@@ -56,7 +56,7 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
     private keyListener(e: KeyboardEvent) {
         clearInterval(this.intervalID);
 
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && /^\d{10}$/.test(this.buffer.join(""))) {
             this.props.signIn(this.buffer.join(""));
         } else {
             this.buffer.push(e.key);
