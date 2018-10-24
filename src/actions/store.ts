@@ -1,7 +1,7 @@
 import * as authA from "actions/auth";
 import * as userA from "actions/user";
 import { basketPrice } from "helpers/store";
-import { IItem } from "models/item";
+import { IBasketItem, IItem } from "models/item";
 import { RootState } from "reducers/root-reducer";
 import { ThunkDispatch } from "redux-thunk";
 import { ActionType, createAction } from "typesafe-actions";
@@ -24,6 +24,25 @@ export const purchaseRequest = createAction("store/PURCHASE_REQUEST");
 export const purchaseSuccess = createAction("store/PURCHASE_SUCCESS");
 export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
 
+interface IAPIBasketItem {
+    object_id: string;
+    amount: number;
+}
+
+function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
+    const count: {[id: string]: number} = {};
+
+    basket.forEach((bItem) => {
+        if (!count[bItem.id]) {
+            count[bItem.id] = 1;
+        } else {
+            count[bItem.id]++;
+        }
+    });
+
+    return Object.keys(count).map((k) => ({ object_id: k, amount: count[k] }));
+}
+
 export function purchase() {
     return (
         dispatch: ThunkDispatch<RootState, void, StoreAction | userA.UserAction | authA.AuthAction>,
@@ -38,7 +57,7 @@ export function purchase() {
         } else {
             fetch(`https://online.ntnu.no/api/v1/orderline/`, {
                 body: JSON.stringify({
-                    orders: getState().store.basket,
+                    orders: prepareBasket(getState().store.basket),
                     user: getState().auth.id,
                 }),
                 headers: {
