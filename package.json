@@ -25,7 +25,7 @@
     "webpack-dev-server": "^3.1.7"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-pase ./dist --hot --inline --colors --port 3000 --open --mode=production",
+    "start": "webpack-dev-server --content-pase ./dist --hot --inline --colors --port 3000 --open",
     "build": "webpack --config webpack.config.js --watch"
   },
   "dependencies": {
