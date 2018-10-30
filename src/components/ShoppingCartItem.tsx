@@ -22,7 +22,6 @@ class ShoppingCartItemContainer extends React.Component<IProps> {
     return (
       <Card
         elevation={Elevation.ONE}
-        interactive
         className="shopping-cart-item"
         onClick={() => this.props.removeFromBasket(this.props.item.uuid)}
       >
