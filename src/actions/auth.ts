@@ -43,14 +43,17 @@ export const authSuccess = createAction("auth/AUTH_SUCCESS", (resolve) => (
 ));
 
 export function authenticate(): (dispatch: Dispatch<AuthAction>) => void {
-    return (
+    return async (
         dispatch: ThunkDispatch<RootState, void, AuthAction>,
     ) => {
         dispatch(authRequest());
 
-        auth.authenticate()
-            .then((token: string) => dispatch(authSuccess(token)))
-            .catch(() => dispatch(authFailure()));
+        try {
+            const token = await auth.authenticate();
+            dispatch(authSuccess(token));
+        } catch {
+            dispatch(authFailure());
+        }
     };
 }
 

@@ -1,5 +1,5 @@
+import ow4 from "api/ow4";
 import { ILoginUser } from "models/user";
-import secrets from "../secrets";
 
 const mockLogin = (rfid: string): ILoginUser => {
     return {
@@ -54,13 +54,11 @@ interface IAuthResponse {
 }
 
 export async function authenticate(): Promise<string> {
-    const response = await fetch(`https://online.ntnu.no/api/v1/auth/?client_id=` +
-        `${encodeURIComponent(secrets.clientId)}&client_secret=${encodeURIComponent(secrets.clientSecret)}` +
-        "&grant_type=client_credentials", { method: "post" });
+    const response = await ow4.authenticate();
 
     if (response.ok) {
         return (await response.json() as IAuthResponse).access_token;
+    } else {
+        throw new Error("Invalid response from auth endpoint.");
     }
-
-    throw new Error("Invalid response from auth endpoint.");
 }

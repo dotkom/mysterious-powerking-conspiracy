@@ -1,5 +1,5 @@
 import * as storeA from "actions/store";
-import { retrieveStoreitems } from "helpers/store";
+import { retrieveStoreItems } from "helpers/store";
 import rootReducer, { RootAction, RootState } from "reducers/root-reducer";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
@@ -39,6 +39,6 @@ export const initialState: RootState = {
 const store: Store<RootState> = configureStore(initialState);
 
 // Add items to store
-retrieveStoreitems().then((items) => items.forEach((item) => store.dispatch(storeA.addItem(item))));
+retrieveStoreItems().then((items) => items.forEach((item) => store.dispatch(storeA.addItem(item))));
 
 export default store;

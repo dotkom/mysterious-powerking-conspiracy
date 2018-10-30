@@ -1,3 +1,4 @@
+import ow4 from "api/ow4";
 import { IBasketItem, IItem } from "models/item";
 
 const testItems: IItem[] = [
@@ -83,21 +84,23 @@ interface IJSONItem {
     };
 }
 
-export function retrieveStoreitems(): Promise<IItem[]> {
+const IMAGE_BASE = "https://online.ntnu.no/";
+
+export async function retrieveStoreItems(): Promise<IItem[]> {
     if (process.env.NODE_ENV === "production") {
-        return fetch("https://online.ntnu.no/api/v1/inventory/").then(
-            (itemsRaw: Response): Promise<IJSONItem[]> => itemsRaw.json(),
-        ).then((items: IJSONItem[]): IItem[] => (
-            items.map((item: IJSONItem): IItem => ({
+        const response = await ow4.retrieveStoreItems();
+        const items: IJSONItem[] = await response.json();
+
+        return items.map((item: IJSONItem): IItem => ({
                 description: item.description,
                 id: item.pk,
-                imageURL: item.image ? `https://online.ntnu.no/${item.image.sm}` : undefined,
+                imageURL: item.image ? `${IMAGE_BASE}${item.image.sm}` : undefined,
                 name: item.name,
                 price: item.price,
-            }))
+            }
         ));
     } else {
-        return new Promise<IItem[]>((resolve) => resolve(testItems));
+        return testItems;
     }
 }
 
