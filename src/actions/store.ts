@@ -1,5 +1,6 @@
 import * as authA from "actions/auth";
 import * as userA from "actions/user";
+import ow4 from "api/ow4";
 import { basketPrice } from "helpers/store";
 import { IItem } from "models/item";
 import { RootState } from "reducers/root-reducer";
@@ -25,22 +26,32 @@ export const purchaseSuccess = createAction("store/PURCHASE_SUCCESS");
 export const purchaseFailure = createAction("store/PURCHASE_FAILURE");
 
 export function purchase() {
-    return (
+    const callback = async (
         dispatch: ThunkDispatch<RootState, void, StoreAction | userA.UserAction | authA.AuthAction>,
-        getState: () => RootState,
+        getStore: () => RootState,
     ) => {
         dispatch(purchaseRequest());
 
-        new Promise<void>((resolve) => resolve()).then(
-            () => {
-                dispatch(userA.subtractFromBalance(basketPrice(getState().store.basket)));
-                dispatch(purchaseSuccess());
-                dispatch(authA.logout());
-            }, (error) => (
-                dispatch(purchaseFailure())
-            ),
-        );
+        if (process.env.NODE_ENV === "development") {
+            dispatch(userA.subtractFromBalance(basketPrice(getStore().store.basket)));
+            dispatch(purchaseSuccess());
+            dispatch(authA.logout());
+        } else {
+            const res = await ow4.purchase(getStore());
+
+            if (res.status === 401) {
+                authA.authenticate()(dispatch);
+                dispatch(purchaseFailure());
+                callback(dispatch, getStore); // recurse
+            }
+
+            dispatch(userA.subtractFromBalance(basketPrice(getStore().store.basket)));
+            dispatch(purchaseSuccess());
+            dispatch(authA.logout());
+        }
     };
+
+    return callback;
 }
 
 export type StoreAction = ActionType<

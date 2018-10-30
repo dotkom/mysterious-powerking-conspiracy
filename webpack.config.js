@@ -25,6 +25,7 @@ module.exports = {
             reducers: srcPath('reducers'),
             epics: srcPath('epics'),
             stylesheets: srcPath('stylesheets'),
+            api: srcPath('api'),
         }
     },
 

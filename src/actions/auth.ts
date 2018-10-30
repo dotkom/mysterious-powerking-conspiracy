@@ -14,17 +14,30 @@ export const loginFailure = createAction("auth/LOGIN_FAILURE");
 
 export function signIn(rfid: string): (
     dispatch: ThunkDispatch<RootState, void, AuthAction | storeA.StoreAction>,
+    getStore: () => RootState,
 ) => void {
-    return (
+    const callback = async (
         dispatch: ThunkDispatch<RootState, void, storeA.StoreAction | AuthAction>,
+        getStore: () => RootState,
     ) => {
         dispatch(loginRequest());
         dispatch(storeA.clearBasket());
 
-        auth.login(rfid).then((user: ILoginUser) => {
+        try {
+            const user: ILoginUser = await auth.login(rfid, getStore().auth.token || "");
             dispatch(loginSuccess(user));
-        });
+        } catch (e) {
+            if ((e as Error).message === "No such user.") {
+                return dispatch(loginFailure());
+            }
+
+            authenticate()(dispatch);
+            dispatch(loginFailure());
+            callback(dispatch, getStore); // recurse
+        }
     };
+
+    return callback;
 }
 
 export const authRequest = createAction("auth/AUTH_REQUEST");
@@ -34,14 +47,17 @@ export const authSuccess = createAction("auth/AUTH_SUCCESS", (resolve) => (
 ));
 
 export function authenticate(): (dispatch: Dispatch<AuthAction>) => void {
-    return (
+    return async (
         dispatch: ThunkDispatch<RootState, void, AuthAction>,
     ) => {
         dispatch(authRequest());
 
-        auth.authenticate()
-            .then((token: string) => dispatch(authSuccess(token)))
-            .catch(() => dispatch(authFailure()));
+        try {
+            const token = await auth.authenticate();
+            dispatch(authSuccess(token));
+        } catch {
+            dispatch(authFailure());
+        }
     };
 }
 

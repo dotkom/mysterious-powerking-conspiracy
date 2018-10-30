@@ -6,7 +6,6 @@ import { ThunkDispatch } from "redux-thunk";
 
 import {
     Card,
-    Colors,
     Elevation,
 } from "@blueprintjs/core";
 
@@ -21,10 +20,21 @@ const mapDispatchToProps = (
 });
 
 class LoginComponent extends React.Component<IDispatchFromProps> {
+    private buffer: string[];
+    private intervalID: any; /* This is actually a number, or a TimerHandler, but react can't find TimerHandler */
+    private intervalHandler: () => void;
+    private INTERVAL_CYCLE_DELAY: number;
+
     constructor(props: IDispatchFromProps) {
         super(props);
 
         this.keyListener = this.keyListener.bind(this);
+
+        this.INTERVAL_CYCLE_DELAY = 2000;
+        this.intervalHandler = () => { this.buffer = []; };
+
+        this.buffer = [];
+        this.intervalID = setInterval(this.intervalHandler, this.INTERVAL_CYCLE_DELAY);
     }
 
     public render() {
@@ -43,16 +53,16 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
         window.removeEventListener("keydown", this.keyListener);
     }
 
-    /**
-     * TODO:
-     * This is where you want to add the input to a buffer (the RFID) and dispatch on
-     * enter. You also want to clear it regularly just in case.
-     */
-
     private keyListener(e: KeyboardEvent) {
-        if (e.keyCode === 13) {
-            this.props.signIn("phoney");
+        clearInterval(this.intervalID);
+
+        if (e.keyCode === 13 && /^\d{10}$/.test(this.buffer.join(""))) {
+            this.props.signIn(this.buffer.join(""));
+        } else {
+            this.buffer.push(e.key);
         }
+
+        this.intervalID = setInterval(this.intervalHandler, this.INTERVAL_CYCLE_DELAY);
     }
 }
 
