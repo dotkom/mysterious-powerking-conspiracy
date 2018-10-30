@@ -23,19 +23,12 @@ interface ILoginResponse {
 
 export async function login(rfid: string, token: string): Promise<ILoginUser> {
     if (process.env.NODE_ENV === "production") {
-        const res = await fetch(
-            `https://online.ntnu.no/api/v1/usersaldo/?rfid=${rfid}`,
-            { headers: { Authorization: `Bearer ${token}` } },
-        );
+        const res = await ow4.login(token, rfid);
 
         if (res.status === 401) {
             throw new Error("Outdated bearer token");
-        }
-
-        if (res.ok) {
-            const data = await res.json() as ILoginResponse;
-
-            const user = data.results[0];
+        } else if (res.ok) {
+            const user = (await res.json() as ILoginResponse).results[0];
 
             return { id: user.pk, name: `${user.first_name} ${user.last_name}`, balance: user.saldo };
         }

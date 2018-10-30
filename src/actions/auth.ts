@@ -16,21 +16,21 @@ export function signIn(rfid: string): (
     dispatch: ThunkDispatch<RootState, void, AuthAction | storeA.StoreAction>,
     getStore: () => RootState,
 ) => void {
-    const callback = (
+    const callback = async (
         dispatch: ThunkDispatch<RootState, void, storeA.StoreAction | AuthAction>,
         getStore: () => RootState,
     ) => {
         dispatch(loginRequest());
         dispatch(storeA.clearBasket());
 
-        auth.login(rfid, getStore().auth.token || "").then((user: ILoginUser) => {
+        try {
+            const user: ILoginUser = await auth.login(rfid, getStore().auth.token || "");
             dispatch(loginSuccess(user));
-        }).catch(() => {
+        } catch {
             authenticate()(dispatch);
             dispatch(loginFailure());
             callback(dispatch, getStore); // recurse
-
-        });
+        }
     };
 
     return callback;
