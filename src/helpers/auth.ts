@@ -28,9 +28,15 @@ export async function login(rfid: string, token: string): Promise<ILoginUser> {
         if (res.status === 401) {
             throw new Error("Outdated bearer token");
         } else if (res.ok) {
-            const user = (await res.json() as ILoginResponse).results[0];
+            const decoded = await res.json();
 
-            return { id: user.pk, name: `${user.first_name} ${user.last_name}`, balance: user.saldo };
+            if (!decoded.count) {
+                throw new Error("No such user.");
+            } else {
+                const user = decoded.results[0];
+                return { id: user.pk, name: `${user.first_name} ${user.last_name}`, balance: user.saldo } as ILoginUser;
+            }
+
         }
 
         throw new Error("Could not sign in user with RFID");

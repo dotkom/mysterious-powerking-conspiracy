@@ -26,7 +26,11 @@ export function signIn(rfid: string): (
         try {
             const user: ILoginUser = await auth.login(rfid, getStore().auth.token || "");
             dispatch(loginSuccess(user));
-        } catch {
+        } catch (e) {
+            if ((e as Error).message === "No such user.") {
+                return dispatch(loginFailure());
+            }
+
             authenticate()(dispatch);
             dispatch(loginFailure());
             callback(dispatch, getStore); // recurse
