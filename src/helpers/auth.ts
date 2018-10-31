@@ -1,7 +1,7 @@
 import ow4 from "api/ow4";
 import { ILoginUser } from "models/user";
 
-const mockLogin = (rfid: string): ILoginUser => {
+const mockLogin = (): ILoginUser => {
     return {
         balance: 29,
         id: 1429,
@@ -42,7 +42,7 @@ export async function login(rfid: string, token: string): Promise<ILoginUser> {
         throw new Error("Could not sign in user with RFID");
     }
 
-    return new Promise<ILoginUser>((resolve) => resolve(mockLogin(rfid)));
+    return mockLogin());
 }
 
 interface IAuthResponse {
