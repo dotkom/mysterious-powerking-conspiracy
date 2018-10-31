@@ -33,10 +33,10 @@ class StoreItemContainer extends React.Component<IProps> {
     public render() {
         return (
             <Card
-                elevation={Elevation.ONE}
-                interactive={!!this.props.user.id}
+                elevation={this.props.user.id ? Elevation.TWO : 0}
                 onClick={this.addToCart}
                 className="store-item"
+                style={this.props.user.id ? {} : { opacity: 0.5 }}
             >
                 <img src={this.props.imageURL || "https://placehold.it/200x200"} alt="Placeholder image"/>
                 <Item {...this.props} />

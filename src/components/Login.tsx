@@ -39,8 +39,8 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
 
     public render() {
         return (
-            <Card elevation={Elevation.ONE} className="login">
-                <p>Vennligst <em>beep</em> adgangskortet ditt for å logge inn.</p>
+            <Card elevation={Elevation.ONE} className="beep-card">
+                <p>Scan student-kortet ditt her.</p>
             </Card>
         );
     }
@@ -56,7 +56,7 @@ class LoginComponent extends React.Component<IDispatchFromProps> {
     private keyListener(e: KeyboardEvent) {
         clearInterval(this.intervalID);
 
-        if (e.keyCode === 13 && /^\d{10}$/.test(this.buffer.join(""))) {
+        if (e.keyCode === 13 && /^\d{8,10}$/.test(this.buffer.join(""))) {
             this.props.signIn(this.buffer.join(""));
         } else {
             this.buffer.push(e.key);

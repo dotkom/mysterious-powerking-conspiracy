@@ -33,11 +33,11 @@ class PurchaseButtonContainer extends React.Component<IProps> {
     }
 
     if (this.props.basket.length === 0) {
-      purchaseButtonLabelText = "Legg til en vare for å kunne handle";
+      purchaseButtonLabelText = "Legg til varer for å betale";
     } else {
       if (basketPrice(this.props.basket) > this.props.balance) {
         purchaseButtonLabelText =
-          `Du har ikke nok penger (mangler ${this.props.balance - basketPrice(this.props.basket)}).`;
+          `Du har ikke nok penger (mangler ${Math.abs(this.props.balance - basketPrice(this.props.basket))}kr).`;
       } else {
         purchaseButtonLabelText =
           `Kjøp ${this.props.basket.length}
@@ -49,6 +49,7 @@ class PurchaseButtonContainer extends React.Component<IProps> {
     return (
       <Button
         large
+        className="purchase-button"
         disabled={this.props.basket.length === 0 || this.props.balance < basketPrice(this.props.basket)}
         intent={
           this.props.balance < basketPrice(this.props.basket) ?

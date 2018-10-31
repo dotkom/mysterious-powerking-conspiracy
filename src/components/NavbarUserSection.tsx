@@ -27,7 +27,6 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
     if (this.props.user.id) {
       return (
         <div className="user-section">
-          <img src={Portrait} alt="Portrait of user" className="user-portrait" />
           <div className="user">
             <h2 className="bp3-heading">{this.props.user.name}</h2>
             <Tag
@@ -37,8 +36,8 @@ class NavbarUserSectionContainer extends React.Component<IStateFromProps> {
             >
               {
                 this.props.basketPrice === 0 ?
-                  <b>{this.props.user.balance}kr</b> :
-                  <b>{this.props.user.balance! - this.props.basketPrice}kr ({this.props.user.balance}kr)</b>
+                  <span>{this.props.user.balance}kr</span> :
+                  <span>{this.props.user.balance! - this.props.basketPrice}kr ({this.props.user.balance}kr)</span>
               }
             </Tag>
           </div>
