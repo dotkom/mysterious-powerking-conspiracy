@@ -42,7 +42,7 @@ export async function login(rfid: string, token: string): Promise<ILoginUser> {
         throw new Error("Could not sign in user with RFID");
     }
 
-    return mockLogin());
+    return mockLogin();
 }
 
 interface IAuthResponse {
