@@ -10,17 +10,16 @@ interface IAPIBasketItem {
 }
 
 function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
-    const count: {[id: string]: number} = {};
-
-    basket.forEach((bItem) => {
-        if (!count[bItem.id]) {
-            count[bItem.id] = 1;
-        } else {
-            count[bItem.id]++;
-        }
-    });
-
-    return Object.keys(count).map((k) => ({ object_id: k, amount: count[k] }));
+    const counted = basket.reduce((curr, item) => ({
+            ...curr,
+            [item.id]: {
+                object_id: item.id,
+                amount: (curr[item.id] && curr[item.id].amount) ? curr[item.id].amount + 1 : 1,
+            },
+        }), {});
+    
+    return Object.keys(counted)
+        .map(key => counted[key]);
 }
 
 export default {
