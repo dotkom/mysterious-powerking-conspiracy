@@ -7,19 +7,28 @@ import { ActionType, getType, StateType } from "typesafe-actions";
 export type UserActions = ActionType<typeof authA & typeof userA>;
 
 export const userReducer = (state: IUser = {}, action: UserActions): IUser => {
+    ["REQUEST", "SUCCESS", "FAILURE"].forEach((e) => {
+        AppToaster.dismiss(`toast/LOGIN_${e}`);
+        AppToaster.dismiss(`toast/AUTH_${e}`);
+    });
+
     switch (action.type) {
         case getType(authA.loginRequest):
             AppToaster.show({ message: "Logger inn...", intent: "primary" }, "toast/LOGIN_REQUEST");
             return state;
 
         case getType(authA.loginSuccess):
-            AppToaster.dismiss("toast/LOGIN_REQUEST");
-            AppToaster.show({ message: "Du er nå logget inn.", intent: "success", timeout: 1500 });
+            AppToaster.show(
+                { message: "Du er nå logget inn.", intent: "success", timeout: 1500 },
+                "toast/LOGIN_SUCCESS",
+            );
             return { ...state, ...action.payload.user };
 
         case getType(authA.loginFailure):
-            AppToaster.dismiss("toast/LOGIN_REQUEST");
-            AppToaster.show({ message: "Kunne ikke logge deg inn.", intent: "danger" });
+            AppToaster.show(
+                { message: "Kunne ikke logge deg inn.", intent: "danger" },
+                "toast/LOGIN_FAILURE",
+            );
             return state;
 
         case getType(authA.authRequest):
@@ -37,8 +46,10 @@ export const userReducer = (state: IUser = {}, action: UserActions): IUser => {
             return state;
 
         case getType(authA.authSuccess):
-            AppToaster.dismiss("toast/AUTH_REQUEST");
-            AppToaster.show({ message: "Nibble er nå autentisert.", intent: "success", timeout: 1500 });
+            AppToaster.show(
+                { message: "Nibble er nå autentisert.", intent: "success", timeout: 1500 },
+                "toast/AUTH_SUCCESS",
+            );
             return { ...state, token: action.payload.token };
 
         case getType(authA.logout):
