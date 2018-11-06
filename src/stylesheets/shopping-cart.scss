@@ -4,6 +4,7 @@
   flex-grow: 1;
   overflow-y: auto;
   padding: 1rem;
+  overflow-x: hidden;
 
   .bp3-heading {
     color: $white;
@@ -38,5 +39,25 @@
     &:not(:last-of-type) {
       margin-bottom: 1rem;
     }
+  }
+}
+
+.beep-card {
+  background-color: $dark-gray1;
+  border: 1px solid white;
+  color: $white;
+  display: flex;
+  height: 70%;
+  justify-content: center;
+  margin-top: auto;
+  margin: auto;
+  width: 100%;
+  
+  &>p {
+    align-self: center;
+    font-size: 3em;
+    font-weight: 100;
+    margin: auto;
+    width: 80%;
   }
 }

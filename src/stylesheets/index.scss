@@ -5,3 +5,19 @@
 @import "./store.scss";
 @import "./navigation.scss";
 @import "./shopping-cart.scss";
+
+/* Toast styling */
+.bp3-toast {
+    width: 100vw;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    top: 1em;
+
+    .bp3-toast-message {
+        text-align: center;
+        align-self: center;
+        font-size: 1.5em;
+        font-weight: 100;
+    }
+}
