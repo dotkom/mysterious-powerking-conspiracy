@@ -4,12 +4,12 @@ import secrets from "../secrets";
 
 const OW4_BASE = "https://online.ntnu.no/api/v1/";
 
-interface IAPIBasketItem {
+export interface IAPIBasketItem {
     object_id: string;
     amount: number;
 }
 
-function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
+export function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
     const count: {[id: string]: number} = {};
 
     basket.forEach((bItem) => {
