@@ -9,18 +9,19 @@ interface IAPIBasketItem {
     amount: number;
 }
 
-// Typescript requires a type for its reduce function if working with objects.
 interface IBasketCount {
     [key: string]: number;
 }
 
-function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
-    const k = basket
-        .map((item) => item.id.toString())
-        .reduce<IBasketCount>((items, id) => ({ ...items, [id]: items[id] + 1 || 1 }), {});
+function countBasketItems(basket: IBasketItem[]): IBasketCount {
+    return basket.reduce<IBasketCount>((items, item) => ({ ...items, [item.id]: items[item.id] + 1 || 1 }), {});
+}
 
-    return Object.keys(k)
-        .map((key) => ({ object_id: key, amount: k[key] }), {});
+function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
+    const counted = countBasketItems(basket);
+
+    return Object.keys(counted)
+        .map((key) => ({ object_id: key, amount: counted[key] }));
 }
 
 export default {
