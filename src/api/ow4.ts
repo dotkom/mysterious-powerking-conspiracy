@@ -4,7 +4,7 @@ import secrets from "../secrets";
 
 const OW4_BASE = "https://online.ntnu.no/api/v1/";
 
-interface IAPIBasketItem {
+export interface IAPIBasketItem {
     object_id: string;
     amount: number;
 }
@@ -12,6 +12,7 @@ interface IAPIBasketItem {
 interface IBasketCount {
     [key: string]: number;
 }
+
 
 function countBasketItems(basket: IBasketItem[]): IBasketCount {
     return basket.reduce<IBasketCount>((items, item) => ({ ...items, [item.id]: items[item.id] + 1 || 1 }), {});
