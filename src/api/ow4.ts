@@ -9,18 +9,20 @@ export interface IAPIBasketItem {
     amount: number;
 }
 
-export function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
-    const count: {[id: string]: number} = {};
+interface IBasketCount {
+    [key: string]: number;
+}
 
-    basket.forEach((bItem) => {
-        if (!count[bItem.id]) {
-            count[bItem.id] = 1;
-        } else {
-            count[bItem.id]++;
-        }
-    });
 
-    return Object.keys(count).map((k) => ({ object_id: k, amount: count[k] }));
+function countBasketItems(basket: IBasketItem[]): IBasketCount {
+    return basket.reduce<IBasketCount>((items, item) => ({ ...items, [item.id]: items[item.id] + 1 || 1 }), {});
+}
+
+function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
+    const counted = countBasketItems(basket);
+
+    return Object.keys(counted)
+        .map((key) => ({ object_id: key, amount: counted[key] }));
 }
 
 export default {
