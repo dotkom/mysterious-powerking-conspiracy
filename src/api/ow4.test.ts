@@ -22,11 +22,11 @@ const items: IBasketItem[] = [
 ];
 
 describe("OW4 API", () => {
-    test("prepareBasket returns a list of object_keys with corresponding amount", () => {
+    test("prepareBasket returns a list of object_keys with corresponding quantity", () => {
         expect(prepareBasket(items)).toEqual([
-            { object_id: "1", amount: 1 },
-            { object_id: "2", amount: 2 },
-            { object_id: "3", amount: 3 },
+            { object_id: "1", quantity: 1 },
+            { object_id: "2", quantity: 2 },
+            { object_id: "3", quantity: 3 },
         ]);
     });
 

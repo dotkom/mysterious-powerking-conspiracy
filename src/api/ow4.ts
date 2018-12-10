@@ -6,7 +6,7 @@ const OW4_BASE = "https://online.ntnu.no/api/v1/";
 
 export interface IAPIBasketItem {
     object_id: string;
-    amount: number;
+    quantity: number;
 }
 
 interface IBasketCount {
