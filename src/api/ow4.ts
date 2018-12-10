@@ -22,7 +22,7 @@ function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
     const counted = countBasketItems(basket);
 
     return Object.keys(counted)
-        .map((key) => ({ object_id: key, amount: counted[key] }));
+        .map((key) => ({ object_id: key, quantity: counted[key] }));
 }
 
 export default {
