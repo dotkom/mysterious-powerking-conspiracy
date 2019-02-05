@@ -18,7 +18,7 @@ function countBasketItems(basket: IBasketItem[]): IBasketCount {
     return basket.reduce<IBasketCount>((items, item) => ({ ...items, [item.id]: items[item.id] + 1 || 1 }), {});
 }
 
-function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
+export function prepareBasket(basket: IBasketItem[]): IAPIBasketItem[] {
     const counted = countBasketItems(basket);
 
     return Object.keys(counted)
